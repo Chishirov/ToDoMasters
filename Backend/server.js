@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import { connectMongoose } from "./util/connectionMongoose.js";
 import router from "./router/router.js";
-
+import { validateSchema } from "./middlewares/loginValidetor.js";
 
 const PORT = 3005;
 
@@ -17,7 +17,7 @@ app.use(cors());
 await connectMongoose();
 
 // Routes
-app.use("/", router); 
+app.use("/", validateSchema, router);
 
 // Server Starten
 app.listen(PORT, () => {

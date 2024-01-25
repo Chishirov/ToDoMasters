@@ -3,6 +3,9 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import User from "../models/LoginSchema.js";
 
+//Implement user registration endpoint
+// Create a route for user registration, saving user details to the database.
+
 export const postRegister = async (req, res) => {
   try {
     const user = new User({
@@ -20,6 +23,9 @@ export const postRegister = async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 };
+
+// Implement login endpoint
+// Create a login route, check user existence, and validate password using bcrypt.
 
 export const loginCheck = async (req, res) => {
   try {
@@ -50,6 +56,8 @@ export const loginCheck = async (req, res) => {
   }
 };
 
+// Generate JWT token on successful login
+// Sign and send a JWT token upon successful login.
 export const authorizeToken = (req, res, next) => {
   const token = req.headers["authorization"]?.split(" ")[1];
   console.log("Token:", token);
@@ -63,10 +71,11 @@ export const authorizeToken = (req, res, next) => {
       console.error("Token verification error:", error);
       return res.status(401).json({ message: "Token verification failed" });
     }
-    res.send(user)
+    res.send(user);
 
     //req.user = user;
     //next();
   });
 };
 
+///// vorchlag :todo:update new password
