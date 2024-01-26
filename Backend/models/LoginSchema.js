@@ -4,6 +4,16 @@ import bcrypt from "bcrypt";
 //email:string,
 //password:number = min 8 incluid (grosbuchtabe)=>withmessage(min 8 and grosbuchtabe)
 
+
+
+const TodoSchema = new mongoose.Schema({
+  brainstrom: { type: String, required: false},
+  todo: { type: String, required: false},
+  doing: { type: String, required: false},
+  done: { type: String, required: false},
+  });
+
+
 const UserModel = new mongoose.Schema({
   name: {
     type: String,
@@ -18,7 +28,9 @@ const UserModel = new mongoose.Schema({
     type: String,
     required: true,
   },
+  todos: [TodoSchema],
 });
+
 UserModel.pre("save", async function (next) {
   if (this.isModified("password")) {
     this.password = await bcrypt.hash(this.password, 10);
