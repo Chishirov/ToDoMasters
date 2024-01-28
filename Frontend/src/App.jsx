@@ -1,15 +1,14 @@
-import { useState } from "react";
 import "./App.css";
-import LoginPage from "./pages/loginPage.jsx";
+import Form from "./components/Form/Form.jsx";
+// import LoginPage from "./pages/loginPage.jsx";
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <>
-      <LoginPage />
-    </>
-  );
+    return (
+        <>
+            {/* <LoginPage /> */}
+            <Form />
+        </>
+    );
 }
 
 export default App;
