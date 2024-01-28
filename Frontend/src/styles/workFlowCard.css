@@ -1,0 +1,140 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #81b29a;
+}
+.card1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 8px;
+  scroll-margin: 8px;
+  white-space: normal;
+  vertical-align: top;
+  position: relative;
+  padding: 5px;
+  padding-bottom: 8px;
+  width: 272px;
+  min-height: 370px;
+  max-height: 500px;
+  border-radius: 20px;
+  background: #212121;
+  overflow: auto;
+
+  /* box-shadow: 5px 5px 8px #1b1b1b, -5px -5px 8px #272727; */
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.card1:hover {
+  box-shadow: 0 0 10px #42544b;
+}
+
+.card-title {
+  width: 96%;
+  font-size: 18px;
+  font-weight: 600;
+  color: #b2eccf;
+}
+
+.card-image {
+  min-height: 170px;
+  background-color: #313131;
+  border-radius: 15px;
+  background: #313131;
+  /* box-shadow: inset 5px 5px 3px #2f2f2f, inset -5px -5px 3px #333333; */
+  width: 96%;
+}
+
+.card-body {
+  /* margin: 13px 0 0 10px; */
+  color: rgb(184, 184, 184);
+  font-size: 15px;
+  width: 96%;
+}
+
+.footer {
+  /* float: right; */
+  /* margin: 28px 0 0 18px; */
+  font-size: 13px;
+  color: #b3b3b3;
+}
+
+.by-name {
+  font-weight: 700;
+}
+
+/*****/
+
+.input {
+  align-self: center;
+  background-color: #292929;
+  border: 1px solid #3e3e3e;
+  border-radius: 8px;
+  color: #fff;
+  /* padding: 14px 24px; */
+  text-decoration: none;
+  font-size: 16px;
+  width: 100%;
+  min-height: 40px;
+  padding-left: 5px;
+  /* margin: 12px 14px; */
+}
+
+.input:hover {
+  border: 1px solid #fff;
+}
+
+.add-to-card {
+  align-self: flex-start;
+  width: 96%;
+  border-radius: 8px;
+  background-color: initial;
+}
+.add-to-card:hover,
+.add-to-card button:hover {
+  background-color: #2d3632;
+  border: none;
+}
+.add-to-card button {
+  border: none;
+  width: 100%;
+  text-align: left;
+  background-color: initial;
+}
+
+.adding-card {
+  display: flex;
+  justify-content: space-evenly;
+  align-self: flex-start;
+}
+/* .adding-card button {
+  cursor: pointer;
+} */
+
+.card-list {
+  width: 96%;
+  list-style: none;
+  color: #b2eccf;
+  /* height: 40px; */
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.card-list li {
+  background-color: #3e3e3e;
+  min-height: 40px;
+  padding: 10px;
+  border-radius: 8px;
+
+  word-wrap: break-word;
+  max-height: 80px;
+  overflow: auto;
+}
+
+.card-list li:hover {
+  border: 1px solid #fff;
+}
