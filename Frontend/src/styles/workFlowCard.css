@@ -19,7 +19,7 @@ body {
   padding: 5px;
   padding-bottom: 8px;
   width: 272px;
-  min-height: 370px;
+  min-height: 270px;
   max-height: 500px;
   border-radius: 20px;
   background: #212121;
@@ -34,9 +34,11 @@ body {
 
 .card-title {
   width: 96%;
+
   font-size: 18px;
   font-weight: 600;
   color: #b2eccf;
+  /* margin: 15px 0 15px 10px; */
 }
 
 .card-image {
@@ -137,4 +139,13 @@ body {
 
 .card-list li:hover {
   border: 1px solid #fff;
+}
+
+.card-conetnt {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow: auto;
+  scrollbar-width: thin;
 }

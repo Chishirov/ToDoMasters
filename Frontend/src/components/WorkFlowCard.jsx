@@ -156,16 +156,17 @@ function WorkFlowCard() {
     <>
       <div className="card1">
         <p className="card-title">Card title</p>
-        <div></div>
-        <div className="card-image"></div>
-        {/* Display the saved values as a list */}
-        {savedItem && (
-          <ul className="card-list">
-            {savedTexts.map((savedText, index) => (
-              <li key={index}>{savedText}</li>
-            ))}
-          </ul>
-        )}
+        <div className="card-conetnt">
+          <div className="card-image"></div>
+          {/* Display the saved values as a list */}
+          {savedItem && (
+            <ul className="card-list">
+              {savedTexts.map((savedText, index) => (
+                <li key={index}>{savedText}</li>
+              ))}
+            </ul>
+          )}
+        </div>
         {klicked && (
           <div className="card-body">
             <input
@@ -177,7 +178,12 @@ function WorkFlowCard() {
             />
           </div>
         )}
-        {!klicked ? (
+        {klicked ? (
+          <div className="adding-card">
+            <button onClick={handelSavedTexts}>add</button>
+            <button onClick={() => setKlicked(false)}>close</button>
+          </div>
+        ) : (
           <div className="add-to-card">
             <button onClick={handelKlick}>
               <i
@@ -186,11 +192,6 @@ function WorkFlowCard() {
               ></i>
               <span style={{ color: "#b3b3b3" }}> add a card</span>
             </button>
-          </div>
-        ) : (
-          <div className="adding-card">
-            <button onClick={handelSavedTexts}>add</button>
-            <button onClick={() => setKlicked(false)}>close</button>
           </div>
         )}
       </div>
