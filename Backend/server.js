@@ -10,11 +10,11 @@ const PORT = process.env.PORT || 4005;
 // App erstellen
 const app = express();
 app.use(express.json());
- app.use(cors());
-// app.use(cors({
-//     origin: "http://localhost:5173",
-//     credentials: true, 
-// })); 
+//  app.use(cors());
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true, 
+})); 
 // __________________________________________________________________________
 // Test Route
 app.get("/", (req, res) => {

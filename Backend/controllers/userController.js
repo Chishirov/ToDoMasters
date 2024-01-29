@@ -12,6 +12,9 @@ export const postRegister = async (req, res) => {
             email: req.body.email,
             password: req.body.password,
         });
+        console.log("name in postRegister",req.body.name);
+        console.log("Email in postRegister",req.body.email);
+        console.log("password in postRegister",req.body.password);
 
         await user.save();
         res.status(201).json({ message: "Erfolgreich registriert", newUser: user.name });
@@ -21,14 +24,15 @@ export const postRegister = async (req, res) => {
     }
 };
 
-export const loginCheck = async (req, res) => {
-    // Der eingeloggte Benutzer und das Token sind jetzt im req-Objekt verfügbar von "authenticateUser + generateToken + setCookie"
-    const loggedUser = req.loggedUser;
-    const token = req.token;
+// export const loginCheck = async (req, res) => {
+//     // Der eingeloggte Benutzer und das Token sind jetzt im req-Objekt verfügbar von "authenticateUser + generateToken + setCookie"
+//     const loggedUser = req.user;
 
-    // Deine restliche Logik für die Anmeldung
-    res.send({ success: true, msg: `User ${loggedUser.email} logged in` });
-};
+//     const token = req.token;
+
+//     // Deine restliche Logik für die Anmeldung
+//     res.send({ success: true, msg: `User ${loggedUser.email} logged in` });
+// };
 
 export const postLogoutController = async (req, res) => {
     const cookieOptions = {

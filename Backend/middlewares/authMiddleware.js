@@ -5,9 +5,13 @@ import userModel from "../models/LoginSchema.js";
 
 export const authenticateUser = async (req, res, next) => {
     const { email, password } = req.body;
-
+    console.log("in authenticateUser");
     try {
+        ;
         const loggedUser = await userModel.findOne({email: email});
+        console.log("email in authentication", email)
+        console.log("password in authentication",password)
+
         const isCorrectPassword = await bcrypt.compare(password, loggedUser.password);
         if (!loggedUser || !isCorrectPassword) {
             return res.status(401).json({ success: false, error: 'Invalid email or password' });
@@ -24,6 +28,7 @@ export const authenticateUser = async (req, res, next) => {
 export const generateToken = (req, res, next) => {
     const expiresInMs = 5 * 60 * 1000; // Token Gültigkeit (5 minutes in milliseconds) 
     const loggedUser = req.user 
+    console.log("req.user in generatToken", req.user );
     try {
         const token = jwt.sign(
             { userId: loggedUser._id },
@@ -63,13 +68,13 @@ export const setCookie = (req, res, next) => {
     res.cookie("jwt", token, cookieOptions);
     res.cookie("JWTinfo", payload, options);
     res.send({success: true, msg: `User ${loggedUser.email} logged in`})
-    next();
+    // next();
 };
 
 // Generate JWT token on successful login
 // Sign and send a JWT token upon successful login.
 export const authorizeToken = (req, res, next) => {
-    const token = req.headers["authorization"]?.split(" ")[1];
+    const token = req.headers["authorization"]?.split(" ")[1]; 
     console.log("Token:", token);
   
     if (!token) {
@@ -88,11 +93,11 @@ export const authorizeToken = (req, res, next) => {
     });
   };
 
-//   export const getUserInfo = (req, res) => {
+  export const getUserInfo = (req, res) => {
 
-//     const loggedUser = userModel.findById(req.userId);
+    const loggedUser = userModel.findById(req.userId);
 
-//     res.send("Dies wären eigentlich zugangsbeschränkte Infos des Users")
+    res.send("Dies wären eigentlich zugangsbeschränkte Infos des Users")
 
-// }
+}
 

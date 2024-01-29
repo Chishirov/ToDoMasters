@@ -36,14 +36,18 @@ function Form() {
     //         : "https://myproject233.render.com";
 
     const handleSignup = async (e) => {
-        const form = e.target;
-        const email = form.email.value;
-        const password = form.password.value;
+    console.log("handleSignup ausgefühlt");
+        // const form = e.target;
+        // const email = form.email.value;
+        // const password = form.password.value;
         e.preventDefault();
+        console.log("email in handleSignup", email)
+        console.log("password in handleSignup", password)
+
         resetMessages();
         try {
             // const response = await axios.post(`${backendApiUrl}/signup`, { email, password });
-            const response = await axios.post(`http://localhost:3005/signup`, { email, password });
+            const response = await axios.post(`http://localhost:3005/signup`, { email, password, name: username });
 
             setUser(response.data.user);
             setMsg("You have successfully registered.");
@@ -56,9 +60,9 @@ function Form() {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        const form = e.target;
-        const email = form.email.value;
-        const password = form.password.value;
+        // const form = e.target;
+        // const email = form.email.value;
+        // const password = form.password.value;
         resetMessages();
         try {
             const response = await axios.post(
@@ -164,7 +168,7 @@ function Form() {
                     <span style={{ color: "red", fontSize: "0.7rem" }}>{error}</span>{" "}
                     <span>{msg}</span>
                 </p>
-                <form>
+                <div>
                     {hasToken ? (
                         <div className="form_group">
                             <p>Logged in as: {user.email}</p>
@@ -241,12 +245,12 @@ function Form() {
                             />
                             <br />
                             <div className="btn">
-                                <button onClick={handleSignup}>Signup</button>
+                                <button onClick={(e)=> handleSignup(e)}>Signup1</button>
                                 <button onClick={handleLogin}>Login</button>
                             </div>
                         </div>
                     )}
-                </form>
+                </div>
             </div>
         </div>
     );
