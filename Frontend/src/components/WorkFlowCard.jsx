@@ -1,34 +1,30 @@
 import React, { useEffect, useState } from "react";
 import "../styles/workFlowCard.css";
+import axios from "axios";
 
-// eslint-disable-next-line react/prop-types
 function WorkFlowCard({ title }) {
   const [klicked, setKlicked] = useState(false);
-  const [savedItem, setSavedItem] = useState(false);
   const [text, setText] = useState("");
   const [savedTexts, setSavedTexts] = useState([]);
-
-  //   console.log("text-input: ", text);
+  const userId = "";
 
   const handelKlick = () => {
     setKlicked(true);
   };
 
   const handelSavedTexts = () => {
-    const value = text;
+    const value = text.trim(); // Remove leading and trailing whitespaces
     if (value !== "") {
       setSavedTexts([...savedTexts, value]);
-      console.log("savedTexts: ", savedTexts);
       setText(""); // Clear the input field
       setKlicked(false); // Close the input field after saving the text
-      setSavedItem(true);
     }
   };
 
   useEffect(() => {
-    // You can set an initial value for the text state here if needed
-    // setText("Initial value");
-  }, []);
+    handelSavedTexts();
+    console.log("savedTexts updated:", savedTexts);
+  }, [savedTexts]);
 
   return (
     <>
@@ -36,8 +32,7 @@ function WorkFlowCard({ title }) {
         <p className="card-title">{title} </p>
         <div className="card-conetnt">
           <div className="card-image"></div>
-          {/* Display the saved values as a list */}
-          {savedItem && (
+          {savedTexts.length > 0 && (
             <ul className="card-list">
               {savedTexts.map((savedText, index) => (
                 <li key={index}>{savedText}</li>

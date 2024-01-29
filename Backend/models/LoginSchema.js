@@ -20,11 +20,18 @@ const UserModel = new mongoose.Schema({
   },
   items: [
     {
-      title: String,
-      BRAINSTORM: false,
-      TODO: false,
-      DOING: false,
-      DONE: false,
+      title: {
+        type: String,
+        required: true,
+      },
+      category: {
+        type: String,
+        required: true,
+      },
+      isSelected: {
+        type: Boolean,
+        default: false,
+      },
     },
   ],
 });

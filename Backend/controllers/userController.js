@@ -7,6 +7,7 @@ import User from "../models/LoginSchema.js";
 // Create a route for user registration, saving user details to the database.
 
 export const postRegister = async (req, res) => {
+  //
   try {
     const user = new User({
       name: req.body.name,
@@ -46,7 +47,11 @@ export const loginCheck = async (req, res) => {
         maxAge: 86400000,
       });
 
-      res.send("Erfolgreich eingeloggt");
+      res.json({
+        token: token,
+        message: "Erfolgreich eingeloggt",
+        user: user,
+      });
     } else {
       res.status(401).send("Passwort oder E-Mail nicht korrekt");
     }
@@ -71,11 +76,38 @@ export const authorizeToken = (req, res, next) => {
       console.error("Token verification error:", error);
       return res.status(401).json({ message: "Token verification failed" });
     }
-    res.send(user);
+    // res.send(user);
 
-    //req.user = user;
-    //next();
+    req.user = user;
+    next();
   });
 };
 
+export const postItem = async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const newItemData = req.body; // Assuming your request body contains the data for the new item
+
+    const newItem = {
+      title: newItemData.title,
+      name: newItemData.name,
+      isSelected: newItemData.isSelected,
+    };
+
+    user.items.push(newItem);
+    await user.save();
+
+    res.status(201).json({ message: "Item added successfully", newItem });
+  } catch (error) {
+    console.error("Error adding item:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
 ///// vorchlag :todo:update new password
