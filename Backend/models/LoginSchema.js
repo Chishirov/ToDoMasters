@@ -18,6 +18,15 @@ const UserModel = new mongoose.Schema({
     type: String,
     required: true,
   },
+  items: [
+    {
+      title: String,
+      BRAINSTORM: false,
+      TODO: false,
+      DOING: false,
+      DONE: false,
+    },
+  ],
 });
 UserModel.pre("save", async function (next) {
   if (this.isModified("password")) {
