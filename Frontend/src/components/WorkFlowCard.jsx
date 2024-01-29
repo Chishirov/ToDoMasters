@@ -16,11 +16,13 @@ function WorkFlowCard({ title }) {
 
   const handelSavedTexts = () => {
     const value = text;
-    setSavedTexts([...savedTexts, value]);
-    console.log("savedTexts: ", savedTexts);
-    setText(""); // Clear the input field
-    setKlicked(false); // Close the input field after saving the text
-    setSavedItem(true);
+    if (value !== "") {
+      setSavedTexts([...savedTexts, value]);
+      console.log("savedTexts: ", savedTexts);
+      setText(""); // Clear the input field
+      setKlicked(false); // Close the input field after saving the text
+      setSavedItem(true);
+    }
   };
 
   useEffect(() => {
