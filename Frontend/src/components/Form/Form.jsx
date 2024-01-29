@@ -30,10 +30,11 @@ function Form() {
         }
     };
 
-    // const backendApiUrl =
-    //     process.env.NODE_ENV === "development"
-    //         ? "http://localhost:3005"
-    //         : "https://myproject233.render.com";
+    const backendApiUrl =
+    process.env.NODE_ENV === "development"
+    ? "http://localhost:3005"
+    : "https://myproject233.render.com"
+        
 
     const handleSignup = async (e) => {
     console.log("handleSignup ausgefühlt");
@@ -46,8 +47,8 @@ function Form() {
 
         resetMessages();
         try {
-            // const response = await axios.post(`${backendApiUrl}/signup`, { email, password });
-            const response = await axios.post(`http://localhost:3005/signup`, { email, password, name: username });
+            const response = await axios.post(`${backendApiUrl}/signup`, { email, password, name: username  });
+            // const response = await axios.post(`http://localhost:3005/signup`, { email, password, name: username });
 
             setUser(response.data.user);
             setMsg("You have successfully registered.");
@@ -67,16 +68,17 @@ function Form() {
         try {
             const response = await axios.post(
                 // `http://localhost:3005/login?include=Todos` ,
-                `http://localhost:3005/login`,
+                // `http://localhost:3005/login`,
 
-                // `${backendApiUrl}/login`,
-                { email, password },
+                `${backendApiUrl}/login`,
+                { email, password, name: username},
                 { withCredentials: true }
             );
             setUser(response.data.user);
             setHasToken(true);
             setIsLoggedIn(true);
             setMsg(`You have successfully logged in: ${email}. JWT received.`);
+            console.log("email");
         } catch (error) {
             setErrorMessages(error);
             console.log("error while logging in:", error);
@@ -88,9 +90,9 @@ function Form() {
         resetMessages();
         try {
             const response = await axios.post(
-                `http://localhost:3005/logout`,
+                // `http://localhost:3005/logout`,
 
-                // `${backendApiUrl}/logout`,
+                `${backendApiUrl}/logout`,
                 {},
                 { withCredentials: true }
             );
@@ -125,7 +127,9 @@ function Form() {
     const userInfoHandler = async () => {
         resetMessages();
         try {
-            const resp = await axios.get(`http://localhost:3005/userinfo`, {
+            const resp = await axios.get(`${backendApiUrl}/userinfo`, {
+
+            // const resp = await axios.get(`http://localhost:3005/userinfo`, {
                 withCredentials: true,
             });
             console.log("resp.data:", resp.data);
@@ -139,7 +143,8 @@ function Form() {
         e.preventDefault();
         resetMessages();
         try {
-            const response = await axios.put(`http://localhost:3005/update-password`, formData, {
+            const response = await axios.put(`${backendApiUrl}/update-password`, formData, {
+            // const response = await axios.put(`http://localhost:3005/update-password`, formData, {
                 withCredentials: true,
             });
             console.log("Server Response:", response.data);
