@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import cookie from "js-cookie";
 import axios from "axios";
-import "./Form.css";
+import "../styles/form.css";
 
 function Form() {
   const [hasToken, setHasToken] = useState(false);
