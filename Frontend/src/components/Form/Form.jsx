@@ -30,10 +30,11 @@ function Form() {
         }
     };
 
-    const backendApiUrl =
-    process.env.NODE_ENV === "development"
-    ? "http://localhost:3005"
-    : "https://myproject233.render.com"
+    const backendApiUrl = "http://localhost:3005";
+    // const backendApiUrl =
+    // process.env.NODE_ENV === "development"
+    // ? "http://localhost:3005"
+    // : "https://myproject233.render.com"
         
 
     const handleSignup = async (e) => {
@@ -66,27 +67,24 @@ function Form() {
         // const password = form.password.value;
         resetMessages();
         try {
-            const response = await axios.post(
-                // `http://localhost:3005/login?include=Todos` ,
-                // `http://localhost:3005/login`,
-
-                `${backendApiUrl}/login`,
-                { email, password, name: username},
-                { withCredentials: true }
-            );
+            const response = await axios.post(`${backendApiUrl}/login`,
+                { email, password},
+                { withCredentials: true });
             setUser(response.data.user);
             setHasToken(true);
             setIsLoggedIn(true);
             setMsg(`You have successfully logged in: ${email}. JWT received.`);
-            console.log("email");
+            console.log("email in handleLogin", email);
+            console.log("password in handleLogin", password);
+
         } catch (error) {
             setErrorMessages(error);
             console.log("error while logging in:", error);
         }
     };
 
-    const handleLogout = async (e) => {
-        e.preventDefault();
+    const handleLogout = async () => {
+        // e.preventDefault();
         resetMessages();
         try {
             const response = await axios.post(
@@ -143,7 +141,7 @@ function Form() {
         e.preventDefault();
         resetMessages();
         try {
-            const response = await axios.put(`${backendApiUrl}/update-password`, formData, {
+            const response = await axios.post(`${backendApiUrl}/update-password`, formData, {
             // const response = await axios.put(`http://localhost:3005/update-password`, formData, {
                 withCredentials: true,
             });
@@ -174,38 +172,7 @@ function Form() {
                     <span>{msg}</span>
                 </p>
                 <div>
-                    {hasToken ? (
-                        <div className="form_group">
-                            <p>Logged in as: {user.email}</p>
-                            <button className="btn" onClick={handleLogout}>
-                                Logout
-                            </button>
-                            <label className="sub_title" htmlFor="password">
-                                New Password:
-                            </label>
-
-                            <input
-                                className="form_style"
-                                placeholder="Enter your password"
-                                id="password"
-                                name="password"
-                                type="password"
-                                required
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                            <button className="btn" onClick={handlePasswordUpdate}>
-                                Update Password
-                            </button>
-                            <hr />
-                            <button
-                                style={{ background: "#F3B95F", margin: "0 auto" }}
-                                onClick={userInfoHandler}
-                            >
-                                Zeige persönliche Daten
-                            </button>
-                        </div>
-                    ) : (
+                    {!hasToken ? (
                         <div className="form_group">
                             <label className="sub_title" htmlFor="username">
                                 Username:
@@ -250,9 +217,40 @@ function Form() {
                             />
                             <br />
                             <div className="btn">
-                                <button onClick={(e)=> handleSignup(e)}>Signup1</button>
+                                <button onClick={handleSignup}>Signup</button>
                                 <button onClick={handleLogin}>Login</button>
                             </div>
+                        </div>
+                    ):(
+                        <div className="form_group">
+                            <p>Logged in as: {user.email}</p>
+                            <button className="btn" onClick={handleLogout}>
+                                Logout
+                            </button>
+                            <label className="sub_title" htmlFor="password">
+                                New Password:
+                            </label>
+
+                            <input
+                                className="form_style"
+                                placeholder="Enter your password"
+                                id="password"
+                                name="password"
+                                type="password"
+                                required
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <button className="btn" onClick={handlePasswordUpdate}>
+                                Update Password
+                            </button>
+                            <hr />
+                            <button
+                                style={{ background: "#F3B95F", margin: "0 auto" }}
+                                onClick={userInfoHandler}
+                            >
+                                Zeige persönliche Daten
+                            </button>
                         </div>
                     )}
                 </div>

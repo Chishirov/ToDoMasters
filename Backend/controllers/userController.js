@@ -24,15 +24,15 @@ export const postRegister = async (req, res) => {
     }
 };
 
-// export const loginCheck = async (req, res) => {
-//     // Der eingeloggte Benutzer und das Token sind jetzt im req-Objekt verfügbar von "authenticateUser + generateToken + setCookie"
-//     const loggedUser = req.user;
+export const loginCheck = async (req, res) => {
+    // Der eingeloggte Benutzer und das Token sind jetzt im req-Objekt verfügbar von "authenticateUser + generateToken + setCookie"
+    const loggedUser = req.user;
 
-//     const token = req.token;
+    const token = req.token;
 
-//     // Deine restliche Logik für die Anmeldung
-//     res.send({ success: true, msg: `User ${loggedUser.email} logged in` });
-// };
+    // Deine restliche Logik für die Anmeldung
+    res.send({ success: true, msg: `User ${loggedUser.email} logged in` });
+};
 
 export const postLogoutController = async (req, res) => {
     const cookieOptions = {
@@ -69,11 +69,9 @@ export const updatePassword = async (req, res) => {
         if (!user) {
             return res.status(401).json({ message: "Email not found" });
         }
-
-        // Log the values for debugging
         console.log('currentPassword:', currentPassword);
         console.log('newPassword:', newPassword);
-        console.log('user.password:', user.password);
+        console.log('userPassword:', user.password);
 
         // Check if the current password is correct
         const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
