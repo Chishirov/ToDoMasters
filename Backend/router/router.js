@@ -12,7 +12,7 @@ router
     .get("/token", authorizeToken)
     .post("/logout", postLogoutController) // log out path from cookie and token 
     .put("/update-password", updatePassword)
-    // .put("/change-password", isAuth, updatePassword)
+    // .put("/update-password", isAuth, updatePassword)
     .get("/userinfo", isAuth, getUserInfoController)
 
 

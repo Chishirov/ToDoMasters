@@ -5,7 +5,7 @@ import { connectMongoose } from "./util/connectionMongoose.js";
 import router from "./router/router.js";
 import { validateSchema } from "./middlewares/loginValidetor.js";
 
-const PORT = process.env.PORT || 4005;
+const PORT = process.env.PORT;
 // __________________________________________________________________________
 // App erstellen
 const app = express();
