@@ -7,11 +7,10 @@ export const authenticateUser = async (req, res, next) => {
     const { email, password } = req.body;
     console.log("in authenticateUser");
     try {
-        ;
         const loggedUser = await userModel.findOne({email: email});
         console.log("email in authentication", email)
         console.log("password in authentication",password)
-
+        console.log("loggedUser in authenticateUser", loggedUser);
         const isCorrectPassword = await bcrypt.compare(password, loggedUser.password);
         if (!loggedUser || !isCorrectPassword) {
             return res.status(401).json({ success: false, error: 'Invalid email or password' });
@@ -20,13 +19,14 @@ export const authenticateUser = async (req, res, next) => {
         req.user = loggedUser; // Store the authenticated user in the request object
         next(); // Proceed to the next middleware
     } catch (error) {
+        console.log("athentication failed", error);
         res.status(500).json({ success: false, error: error.message });
     }
 };
 
 // Middleware für Token-Erstellung
 export const generateToken = (req, res, next) => {
-    const expiresInMs = 5 * 60 * 1000; // Token Gültigkeit (5 minutes in milliseconds) 
+    const expiresInMs = 120 * 60 * 1000; // Token Gültigkeit (5 minutes in milliseconds) 
     const loggedUser = req.user 
     console.log("req.user in generatToken", req.user );
     try {
@@ -41,6 +41,7 @@ export const generateToken = (req, res, next) => {
         console.log("Token:", token);
         next();
     } catch (error) {
+        console.log("Token generation failed", error);
         res.status(500).json({ success: false, error: 'Token generation failed' });
     }
 };
@@ -49,7 +50,7 @@ export const generateToken = (req, res, next) => {
 export const setCookie = (req, res, next) => {
     const loggedUser = req.user 
     const token = req.token;
-    const expiresInMs = 5 * 60 * 1000; // Token Gültigkeit (5 minutes in milliseconds)
+    const expiresInMs = 120 * 60 * 1000; // Token Gültigkeit (5 minutes in milliseconds)
     const expiresInDate = new Date( Date.now() + expiresInMs ); 
 
     const cookieOptions = {
@@ -65,6 +66,7 @@ export const setCookie = (req, res, next) => {
         expires: expiresInDate.toISOString(),
         email: loggedUser.email,
     };
+    console.log("setCookie");
     res.cookie("jwt", token, cookieOptions);
     res.cookie("JWTinfo", payload, options);
     res.send({success: true, msg: `User ${loggedUser.email} logged in`})

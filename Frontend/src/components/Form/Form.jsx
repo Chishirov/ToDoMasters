@@ -119,7 +119,7 @@ function Form() {
         // const resp = await axios.get(`http://localhost:3005/userinfo`, {
         withCredentials: true,
       });
-      console.log("resp.data:", resp.data);
+      console.log("resp-data:", resp.data);
       setMsg(resp.data);
     } catch (error) {
       setErrorMessages(error);
