@@ -2,7 +2,35 @@ import React, { useContext } from "react";
 import { Context } from "../context/Context";
 
 function UpdatePassword() {
-  const { hasToken, password, setPassword, user } = useContext(Context);
+  const {
+    hasToken,
+    password,
+    setPassword,
+    user,
+    resetMessages,
+    backendApiUrl,
+    formData,
+    setErrorMessages,
+  } = useContext(Context);
+
+  const handlePasswordUpdate = async (e) => {
+    e.preventDefault();
+    resetMessages();
+    try {
+      const response = await axios.put(
+        `${backendApiUrl}/update-password`,
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
+      console.log("Server Response:", response.data);
+    } catch (error) {
+      setErrorMessages(error);
+      console.log("error while update-password:", error);
+    }
+  };
+
   return (
     <div className="form_area">
       {hasToken ? (

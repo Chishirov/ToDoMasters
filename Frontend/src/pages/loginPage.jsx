@@ -1,12 +1,12 @@
 import Login from "../components/Login";
 import Logout from "../components/Logout";
-import Register from "../components/Register";
+import Signup from "../components/Signup";
 import UpdatePassword from "../components/UpdatePassword";
 
 function loginPage() {
   return (
     <div className="container">
-      <Register />
+      <Signup />
       <Login />
       <UpdatePassword />
       <Logout />

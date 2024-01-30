@@ -20,7 +20,20 @@ const ContextProvider = ({ children }) => {
   const [klicked, setKlicked] = useState(false);
   const [text, setText] = useState("");
   const [savedTexts, setSavedTexts] = useState([]);
-
+  // URL
+  const backendApiUrl = "http://localhost:3005";
+  // functions
+  const resetMessages = () => {
+    setMsg("");
+    setError("");
+  };
+  const setErrorMessages = (error) => {
+    if (error.response) {
+      setError(error.response.data.error);
+    } else {
+      setError(error.message);
+    }
+  };
   // export useStates
   return (
     <Context.Provider
@@ -49,6 +62,9 @@ const ContextProvider = ({ children }) => {
         setText,
         savedTexts,
         setSavedTexts,
+        backendApiUrl,
+        resetMessages,
+        setErrorMessages,
       }}
     >
       {children}
@@ -58,7 +74,7 @@ const ContextProvider = ({ children }) => {
 
 export { Context, ContextProvider };
 
-// import variablen
+// um variablen zu importieren
 /*
 const { 
     Schrieb nur die benötigten Variablen, z.B. text, username

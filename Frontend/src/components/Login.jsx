@@ -2,8 +2,42 @@ import React, { useContext } from "react";
 import { Context } from "../context/Context";
 
 function Login() {
-  const { hasToken, email, setEmail, password, setPassword, handleLogin } =
-    useContext(Context);
+  const {
+    hasToken,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    setUser,
+    setHasToken,
+    setIsLoggedIn,
+    setMsg,
+    setErrorMessages,
+    resetMessages,
+  } = useContext(Context);
+
+  const handleLogin = async (e) => {
+    console.log("handleLogin ausgefühlt");
+    e.preventDefault();
+    resetMessages();
+    try {
+      const response = await axios.post(
+        `${backendApiUrl}/login`,
+        { email: email, password: password },
+        { withCredentials: true }
+      );
+      setUser(response.data.user);
+      setHasToken(true);
+      setIsLoggedIn(true);
+      setMsg(`You have successfully logged in: ${email}. JWT received.`);
+      console.log("email in handleLogin", email);
+      console.log("password in handleLogin", password);
+    } catch (error) {
+      setErrorMessages(error);
+      console.log("error while logging in:", error);
+    }
+  };
+
   return (
     <div className="form_area">
       <div>

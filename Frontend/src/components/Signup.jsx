@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../context/Context";
 
-function Register() {
+function Signup() {
   const {
     hasToken,
     error,
@@ -12,8 +12,33 @@ function Register() {
     setEmail,
     password,
     setPassword,
-    handleSignup,
+    backendApiUrl,
+    resetMessages,
+    setErrorMessages,
+    setIsLoggedIn,
+    setMsg,
+    setUser,
   } = useContext(Context);
+
+  const handleSignup = async (e) => {
+    console.log("handleSignup ausgefühlt");
+    e.preventDefault();
+    resetMessages();
+    try {
+      const response = await axios.post(`${backendApiUrl}/signup`, {
+        email,
+        password,
+        name: username,
+      });
+      // const response = await axios.post(`http://localhost:3005/signup`, { email, password, name: username });
+      setUser(response.data.user);
+      setMsg("You have successfully registered.");
+      setIsLoggedIn(true);
+    } catch (error) {
+      setErrorMessages(error);
+      console.log("error while signing up:", error);
+    }
+  };
   return (
     <div className="form_area">
       <p style={{ color: "orange" }}>
@@ -26,7 +51,7 @@ function Register() {
       <div>
         {!hasToken ? (
           <div className="form_group">
-            <h3 className="title sub_title">Register</h3>
+            <h3 className="title sub_title">Signup</h3>
             <label className="sub_title" htmlFor="username">
               Username:
             </label>
@@ -70,7 +95,7 @@ function Register() {
             />
             <br />
             <div className="btn">
-              <button onClick={handleSignup}>Register</button>
+              <button onClick={handleSignup}>Signup</button>
             </div>
           </div>
         ) : (
@@ -81,4 +106,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Signup;
