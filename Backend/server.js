@@ -1,18 +1,25 @@
 import express from "express";
-import mongoose from "mongoose";
 import cors from "cors";
 import { connectMongoose } from "./util/connectionMongoose.js";
 import router from "./router/router.js";
 import { validateSchema } from "./middlewares/loginValidetor.js";
 
-const PORT = 3005;
+const PORT = process.env.PORT
 
 // App erstellen
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors(
+  {
+    origin: "http://localhost:5173",
+    credentials: true,
+  }
+));
 
+app.get("/", (req, res) => {
+  res.send("Backend running")
+})
 // Venwendung zum Mongoose
 await connectMongoose();
 

@@ -1,27 +1,15 @@
+import Login from "../components/Login";
+import Logout from "../components/Logout";
+import Register from "../components/Register";
+import UpdatePassword from "../components/UpdatePassword";
+
 function loginPage() {
   return (
-    <div>
-      <h3>Login</h3>
-      <form action="">
-        <p>Username</p>
-        <input type="text" />
-        <p>Password</p>
-        <input type="text" />
-        <button>Login</button>
-      </form>
-      <h3>Register</h3>
-      <form action="">
-        <p>Name</p>
-        <input type="text" />
-        <p>Username</p>
-        <input type="text" />
-        <p>Password</p>
-        <input type="text" />
-        <button>Register</button>
-      </form>
-      <form action="">
-        <button>Logout</button>
-      </form>
+    <div className="container">
+      <Register />
+      <Login />
+      <UpdatePassword />
+      <Logout />
     </div>
   );
 }

@@ -1,7 +1,9 @@
 import { body } from "express-validator";
 import { validationResult } from "express-validator";
 import { rateLimit } from "express-rate-limit";
+
 export const validatorUser = [
+
   body("password")
     .isLength({ min: 8, max: 30 })
     .withMessage("Password muss zwischen 8 und 30 Zeichen sein")
@@ -11,11 +13,13 @@ export const validatorUser = [
     .withMessage("Passwort muss einen Großbuchstaben enthalten")
     .matches(/\d/)
     .withMessage("Passwort muss eine Zahl enthalten"),
+
   body("email")
     .trim()
     .isEmail()
     .withMessage("Bitte gültige email angeben")
     .normalizeEmail(),
+
   body("name")
     .trim()
     .exists()
