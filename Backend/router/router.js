@@ -7,18 +7,21 @@ import {
   postLoginController,
   postLogoutController,
 } from "../controllers/loginController.js";
-import { getUserInfo } from "../controllers/userController.js";
+import { getAllUsers, getUserInfo } from "../controllers/userController.js";
 import authintcatUser from "../middlewares/authintcatUser.js";
 import { validateUser } from "../middlewares/validateUser.js";
+import { validateSchema } from "../middlewares/validateSchema.js";
 const router = express.Router();
 
 // sign up
-router.post("/signup", validateUser, postSignupController);
+router.post("/signup", validateUser,  postSignupController);
 //log in
 router.post("/login", limiter, postLoginController);
 router.post("/logout", postLogoutController);
 
 router.get("/userinfo", authintcatUser, getUserInfo);
+router.get('/users', getAllUsers);
+router.get('/users/:userId', getUserInfo);
 
 // router.post("/todos", authorizeUser, createTodo);
 

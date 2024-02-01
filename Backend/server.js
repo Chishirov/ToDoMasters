@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 await connectMongoose();
 
 // Routes
-app.use("/", validateSchema, router);
+app.use("/",  router);
 
 // Server Starten
 app.listen(PORT, () => {
