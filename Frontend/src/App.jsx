@@ -1,12 +1,12 @@
-import React from "react";
+
 import "./App.css";
-import Login from "./Login";
+import Login from "./components/Login.jsx";
 import { useContext, useEffect, useState } from "react";
 import cookie from "js-cookie"; // cookie parser
 
-import WorkFlowPage from "./WorkFlowPage";
+import WorkFlowPage from "./components/WorkFlowPage.jsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { UserContext } from "./context/UserContext";
+import { UserContext } from "./context/UserContext.jsx";
 
 function App() {
   const {

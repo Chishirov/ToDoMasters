@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import "./styles/workFlowCard.css";
+import "../styles/workFlowCard.css";
 import axios from "axios";
-import { UserContext } from "./context/UserContext.jsx";
+import { UserContext } from "../context/UserContext.jsx";
 
 function WorkFlowCard({ titleName }) {
   const {

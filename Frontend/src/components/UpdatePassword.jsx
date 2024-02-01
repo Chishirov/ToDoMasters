@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import axios from "axios";
-import { UserContext } from "../context/Context";
+import { UserContext } from "../context/UserContext.jsx";
 
 function UpdatePassword() {
   const {

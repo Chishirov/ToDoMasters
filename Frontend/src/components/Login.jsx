@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import cookie from "js-cookie"; // cookie parser
 import axios from "axios";
-import { UserContext } from "./context/UserContext";
+import { UserContext } from "../context/UserContext.jsx";
 import { useNavigate } from "react-router-dom";
 
 function Login() {

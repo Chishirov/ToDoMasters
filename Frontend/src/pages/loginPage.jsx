@@ -1,6 +1,6 @@
-import Login from "../components/Login";
-import Logout from "../components/Logout";
-import Signup from "../components/Signup";
+import Login from "../components/Login.jsx";
+import Logout from "../components/Logout.jsx";
+import Signup from "../components/Signup.jsx";
 // import UpdatePassword from "../components/UpdatePassword";
 
 function loginPage() {

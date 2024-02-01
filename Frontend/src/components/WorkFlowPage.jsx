@@ -1,6 +1,6 @@
 import React from "react";
-import WorkFlowCard from "./WorkFlowCard";
-import "./styles/workflowPage.css";
+import WorkFlowCard from "./WorkFlowCard.jsx";
+import "../styles/workflowPage.css";
 function WorkFlowPage() {
   const titles = ["BRAINSTORM 🤔", "TODO 📚", "DOING ⚙️", "DONE 🙌🏽"];
 
