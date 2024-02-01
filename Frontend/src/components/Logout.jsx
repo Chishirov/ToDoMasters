@@ -1,41 +1,42 @@
 import React, { useContext } from "react";
-import { Context } from "../context/Context";
-
+import { UserContext } from "../context/Context";
+import axios from "axios";
 function Logout() {
   const {
     hasToken,
     resetMessages,
     setMsg,
     setHasToken,
-    setIsLoggedIn,
     setUser,
     setErrorMessages,
-  } = useContext(Context);
-  const handleLogout = async () => {
+    backendApiUrl,
+  } = useContext(UserContext);
+  const logoutHandler = async (e) => {
+    e.preventDefault();
+
     resetMessages();
+
     try {
       const response = await axios.post(
         `${backendApiUrl}/logout`,
         {},
         { withCredentials: true }
       );
-      setMsg("You have successfully logged out.", response.data);
-      setHasToken(false);
-      setIsLoggedIn(false);
-      setUser({});
 
-      console.log("Logout successful:", response.data);
+      setMsg("You have successfully logged out.", response.data);
+      setMsg("Erfolgreich ausgeloggt.");
+      setHasToken(false);
+      setUser({});
+      // setRerender((prev) => !prev); // Force re-render
     } catch (error) {
       setErrorMessages(error);
-
-      console.log("error while logging out:", error);
     }
   };
 
   return (
     <div className="form_area">
       {hasToken ? (
-        <button className="btn" onClick={handleLogout}>
+        <button className="btn" onClick={logoutHandler}>
           Logout
         </button>
       ) : (

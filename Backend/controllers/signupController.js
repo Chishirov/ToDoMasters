@@ -1,19 +1,19 @@
-import User from "../models/LoginSchema.js";
+import userModel from "../models/LoginSchema.js";
+import bcrypt from "bcrypt";
+export const postSignupController = async (req, res) => {
+  const { name, email, password } = req.body;
 
-export const signupController = async (req, res) => {
   try {
-    const user = new User({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
+    const saltedHashedPassword = await bcrypt.hash(password, 14);
+    const newUser = await new userModel({
+      name,
+      email,
+      password: saltedHashedPassword,
     });
-
-    await user.save();
-    res
-      .status(201)
-      .json({ message: "Erfolgreich registriert", newUser: user.name });
+    await newUser.save();
+    res.status(201).send({ success: true, insertedData: newUser });
   } catch (error) {
     console.error(error);
-    res.status(500).send({ message: error.message });
+    res.status(500).send({ success: false, error: error.message });
   }
 };

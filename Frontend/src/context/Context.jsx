@@ -1,25 +1,31 @@
 import { createContext, useState } from "react";
 
-const Context = createContext();
+const UserContext = createContext();
 
 const ContextProvider = ({ children }) => {
   // useState loginPage
-  const [hasToken, setHasToken] = useState(false);
+  // const [hasToken, setHasToken] = useState(false);
+  // const [error, setError] = useState("");
+  // const [msg, setMsg] = useState("");
+  // const [user, setUser] = useState({});
+  // const [email, setEmail] = useState("");
+  // const [username, setUsername] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [formData, setFormData] = useState({
+  //   email: "",
+  //   password: "",
+  // });
+  // // useState WrokFlowCard
+  // const [klicked, setKlicked] = useState(false);
+  // const [text, setText] = useState("");
+  // const [savedTexts, setSavedTexts] = useState([]);
   const [error, setError] = useState("");
   const [msg, setMsg] = useState("");
+  const [hasToken, setHasToken] = useState(false);
   const [user, setUser] = useState({});
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  // useState WrokFlowCard
-  const [klicked, setKlicked] = useState(false);
-  const [text, setText] = useState("");
-  const [savedTexts, setSavedTexts] = useState([]);
+  const [userId, setUserId] = useState();
+  console.log("user", user);
   // URL
   const backendApiUrl = "http://localhost:3005";
   // functions
@@ -36,7 +42,7 @@ const ContextProvider = ({ children }) => {
   };
   // export useStates
   return (
-    <Context.Provider
+    <UserContext.Provider
       value={{
         hasToken,
         setHasToken,
@@ -46,33 +52,19 @@ const ContextProvider = ({ children }) => {
         setMsg,
         user,
         setUser,
-        email,
-        setEmail,
-        username,
-        setUsername,
-        password,
-        setPassword,
-        isLoggedIn,
-        setIsLoggedIn,
-        formData,
-        setFormData,
-        klicked,
-        setKlicked,
-        text,
-        setText,
-        savedTexts,
-        setSavedTexts,
+        userId,
+        setUserId,
         backendApiUrl,
         resetMessages,
         setErrorMessages,
       }}
     >
       {children}
-    </Context.Provider>
+    </UserContext.Provider>
   );
 };
 
-export { Context, ContextProvider };
+export { UserContext, ContextProvider };
 
 // um variablen zu importieren
 /*

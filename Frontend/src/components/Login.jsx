@@ -1,81 +1,111 @@
-import React, { useContext } from "react";
-import { Context } from "../context/Context";
-
+import React, { useContext, useEffect } from "react";
+import cookie from "js-cookie";
+import { UserContext } from "../context/Context";
+import axios from "axios";
 function Login() {
   const {
+    userId,
+    setUserId,
     hasToken,
-    email,
-    setEmail,
-    password,
-    setPassword,
+    backendApiUrl,
     setUser,
     setHasToken,
-    setIsLoggedIn,
     setMsg,
     setErrorMessages,
     resetMessages,
-  } = useContext(Context);
-
-  const handleLogin = async (e) => {
-    console.log("handleLogin ausgefühlt");
+  } = useContext(UserContext);
+  console.log("userId", userId);
+  const loginHandler = async (e) => {
     e.preventDefault();
+
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
     resetMessages();
+
     try {
-      const response = await axios.post(
+      const resp = await axios.post(
         `${backendApiUrl}/login`,
-        { email: email, password: password },
-        { withCredentials: true }
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
       );
-      setUser(response.data.user);
+      setMsg(`Erfolgreich eingeloggt: ${email}. JWT erhalten.`);
+
       setHasToken(true);
-      setIsLoggedIn(true);
-      setMsg(`You have successfully logged in: ${email}. JWT received.`);
-      console.log("email in handleLogin", email);
-      console.log("password in handleLogin", password);
+      setUser({ email });
+      // navigate("/workflow");
+      // setRerender((prev) => !prev); // Force re-render
     } catch (error) {
       setErrorMessages(error);
       console.log("error while logging in:", error);
     }
   };
+  const handleIfUserHasToken = () => {
+    console.log("handleIfUserHasToken aufgerufen");
+
+    let JWTinfocookie = cookie.get("JWTinfo");
+
+    console.log("JWTinfo cookie", JWTinfocookie);
+    if (!JWTinfocookie) return;
+
+    JWTinfocookie = JWTinfocookie.replace("j:", "");
+    const cookieValueObj = JSON.parse(JWTinfocookie);
+    console.log("cookieValueObj", cookieValueObj);
+    setUserId(cookieValueObj.user._id);
+
+    const expirationInMs = new Date(cookieValueObj.expires) - new Date();
+    console.log("JWT läuft ab in", expirationInMs / 1000, "Sekunden");
+
+    if (expirationInMs <= 0) return;
+
+    setHasToken(true);
+    setUser({ email: cookieValueObj.email });
+    setMsg(`Eingeloggter User: ${cookieValueObj.email}.`);
+  };
+
+  // const userInfoHandler = async () => {
+  //   resetMessages();
+
+  //   try {
+  //     const resp = await axios.get(`${backendApiUrl}/userinfo`, {
+  //       withCredentials: true,
+  //     });
+  //     console.log("resp.data:", resp.data);
+  //     setMsg(resp.data);
+  //   } catch (error) {
+  //     setErrorMessages(error);
+  //   }
+  // };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await handleIfUserHasToken();
+    };
+    fetchData();
+  }, [hasToken]);
 
   return (
     <div className="form_area">
       <div>
         {!hasToken ? (
-          <div className="form_group">
-            <h3>Login</h3>
-            <label className="sub_title" htmlFor="email">
-              Email:
-            </label>
-            <input
-              className="form_style"
-              placeholder="Enter your email"
-              id="email login"
-              name="email"
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <br />
-            <label className="sub_title" htmlFor="password">
-              Password:
-            </label>
-            <input
-              className="form_style"
-              placeholder="Enter your password"
-              id="password login"
-              name="password"
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <br />
-            <div className="btn">
-              <button onClick={handleLogin}>Login</button>
-            </div>
-          </div>
+          <>
+            <h2>Login</h2>
+            <form onSubmit={loginHandler}>
+              <label htmlFor="email">Email: </label>
+              <input type="email" name="email" />
+              <br />
+              <label htmlFor="password">Password: </label>
+              <input type="password" name="password" />
+              <br />
+              <button type="submit">Log In</button>
+            </form>
+          </>
         ) : (
           ""
         )}

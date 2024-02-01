@@ -11,16 +11,16 @@ export const validateUser = [
     .matches(/\d/)
     .withMessage("Passwort muss eine Zahl enthalten"),
 
-  body("email")
-    .trim()
-    .isEmail()
-    .withMessage("Bitte gültige email angeben")
-    .normalizeEmail(),
+  // body("email")
+  //   .trim()
+  //   .isEmail()
+  //   .withMessage("Bitte gültige email angeben")
+  //   .normalizeEmail(),
 
-  body("name")
-    .trim()
-    .exists()
-    .isLength({ min: 3, max: 30 })
-    .withMessage("Bitte Namen eingeben")
-    .escape(),
+  // body("name")
+  //   .trim()
+  //   .exists()
+  //   .isLength({ min: 3, max: 30 })
+  //   .withMessage("Bitte Namen eingeben")
+  //   .escape(),
 ];

@@ -1,39 +1,40 @@
 import React, { useContext } from "react";
-import { Context } from "../context/Context";
+import { UserContext } from "../context/Context";
+import axios from "axios";
 
 function Signup() {
   const {
     hasToken,
     error,
     msg,
-    username,
-    setUsername,
-    email,
-    setEmail,
-    password,
-    setPassword,
     backendApiUrl,
     resetMessages,
     setErrorMessages,
-    setIsLoggedIn,
     setMsg,
     setUser,
-  } = useContext(Context);
+  } = useContext(UserContext);
 
-  const handleSignup = async (e) => {
-    console.log("handleSignup ausgefühlt");
+  const signUpHandler = async (e) => {
     e.preventDefault();
+
+    const form = e.target;
+    console.log(form.value);
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+
     resetMessages();
+
     try {
-      const response = await axios.post(`${backendApiUrl}/signup`, {
+      const resp = await axios.post(`${backendApiUrl}/signup`, {
+        name,
         email,
         password,
-        name: username,
       });
-      // const response = await axios.post(`http://localhost:3005/signup`, { email, password, name: username });
-      setUser(response.data.user);
-      setMsg("You have successfully registered.");
-      setIsLoggedIn(true);
+
+      console.log("Erfolgreich registriert:", resp.data);
+      setMsg("Du hast dich erfolgreich registriert.");
+      // setRerender((prev) => !prev); // Force re-render
     } catch (error) {
       setErrorMessages(error);
       console.log("error while signing up:", error);
@@ -50,54 +51,21 @@ function Signup() {
       </p>
       <div>
         {!hasToken ? (
-          <div className="form_group">
-            <h3 className="title sub_title">Signup</h3>
-            <label className="sub_title" htmlFor="username">
-              Username:
-            </label>
-            <input
-              className="form_style"
-              id="username"
-              name="username"
-              type="text"
-              placeholder="Enter your username"
-              required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <br />
-            <label className="sub_title" htmlFor="email">
-              Email:
-            </label>
-            <input
-              className="form_style"
-              placeholder="Enter your email"
-              id="email"
-              name="email"
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <br />
-            <label className="sub_title" htmlFor="password">
-              Password:
-            </label>
-            <input
-              className="form_style"
-              placeholder="Enter your password"
-              id="password"
-              name="password"
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <br />
-            <div className="btn">
-              <button onClick={handleSignup}>Signup</button>
-            </div>
-          </div>
+          <>
+            <h2>Sign Up</h2>
+            <form onSubmit={signUpHandler}>
+              <label htmlFor="name">Name: </label>
+              <input type="name" name="name" />
+              <br />
+              <label htmlFor="email">Email: </label>
+              <input type="email" name="email" />
+              <br />
+              <label htmlFor="password">Password: </label>
+              <input type="password" name="password" />
+              <br />
+              <button type="submit">Sign Up</button>
+            </form>
+          </>
         ) : (
           ""
         )}

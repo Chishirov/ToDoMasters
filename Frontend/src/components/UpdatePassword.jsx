@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import { Context } from "../context/Context";
+import axios from "axios";
+import { UserContext } from "../context/Context";
 
 function UpdatePassword() {
   const {
@@ -11,7 +12,7 @@ function UpdatePassword() {
     backendApiUrl,
     formData,
     setErrorMessages,
-  } = useContext(Context);
+  } = useContext(UserContext);
 
   const handlePasswordUpdate = async (e) => {
     e.preventDefault();
