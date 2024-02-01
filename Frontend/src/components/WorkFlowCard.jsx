@@ -13,13 +13,14 @@ function WorkFlowCard({ titleName }) {
     setMsg,
     user,
     setUser,
+    backendApiUrl,
     userId,
     setUserId,
   } = useContext(UserContext);
   const [items, setItems] = useState([]);
   const [klicked, setKlicked] = useState(false);
   const [text, setText] = useState("");
-  const backendApiUrl = "http://localhost:4001/api";
+
   console.log(userId);
 
   const handelKlick = () => {
@@ -28,26 +29,35 @@ function WorkFlowCard({ titleName }) {
   const getUserByIdHandler = async () => {
     if (userId) {
       try {
-        const resp = await axios.get(`${backendApiUrl}/user/${userId}`, {
+        const resp = await axios.get(`${backendApiUrl}/user/${user._id}`, {
           withCredentials: true,
         });
 
-        console.log("User data by ID:", resp.data.userData);
-        console.log("user in work flow: ", user);
-        setItems(resp.data.userData.items);
-        console.log("user.items:", user.items);
-        // Handle the user data as needed, e.g., update state
+        console.log("Server response:", resp.data);
+
+        setItems(resp.data.items);
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching user data:", error);
+
+        // Log additional details about the error
+        if (error.response) {
+          console.error("Server responded with:", error.response.data);
+        } else if (error.request) {
+          console.error("No response received. Request made:", error.request);
+        } else {
+          console.error("Error setting up the request:", error.message);
+        }
       }
     }
   };
+
   // Filter items based on the current category
 
   const handelSavedTexts = async () => {
     console.log("Inside handelSavedTexts");
     const value = text.trim(); // Remove leading and trailing whitespaces
     if (value !== "") {
+      console.log("user._id", user._id);
       try {
         const response = await axios.post(
           `${backendApiUrl}/postitem/${userId}`,
@@ -61,6 +71,7 @@ function WorkFlowCard({ titleName }) {
         setKlicked(false); // Close the input field after saving the text
 
         await getUserByIdHandler();
+        // setItems(response.data);
       } catch (error) {
         console.log(error);
       }

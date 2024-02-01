@@ -7,10 +7,15 @@ import {
   postLoginController,
   postLogoutController,
 } from "../controllers/loginController.js";
-import { getAllUsers, getUserInfo } from "../controllers/userController.js";
+import {
+  getAllUsers,
+  getUserById,
+  getUserInfo,
+} from "../controllers/userController.js";
 import authintcatUser from "../middlewares/authintcatUser.js";
 import { validateUser } from "../middlewares/validateUser.js";
 import { validateSchema } from "../middlewares/validateSchema.js";
+import { postItem } from "../controllers/itemsController.js";
 const router = express.Router();
 
 // sign up
@@ -21,7 +26,10 @@ router.post("/api/logout", postLogoutController);
 
 router.get("/api/userinfo", authintcatUser, getUserInfo);
 router.get("/api/users", getAllUsers);
-router.get("/api/users/:userId", getUserInfo);
+router.get("/api/user/:id", getUserById);
+
+//////
+router.post("/api/postitem/:id", postItem);
 
 // router.post("/todos", authorizeUser, createTodo);
 

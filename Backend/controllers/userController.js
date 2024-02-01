@@ -5,7 +5,9 @@ export const getUserInfo = async (req, res) => {
 
     // Überprüfe, ob die Benutzer-ID vorhanden ist
     if (!userId) {
-      return res.status(400).json({ message: "Benutzer-ID fehlt in der Anfrage" });
+      return res
+        .status(400)
+        .json({ message: "Benutzer-ID fehlt in der Anfrage" });
     }
 
     // Rufe den Benutzer aus der Datenbank ab
@@ -29,23 +31,17 @@ export const getUserInfo = async (req, res) => {
   }
 };
 
-
-
-
-
-    
-
 export const getUserById = async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const id = req.params.id;
     // Überprüfe, ob die Benutzer-ID vorhanden ist
-    if (!userId) {
+    if (!id) {
       return res
         .status(400)
         .json({ message: "Benutzer-ID fehlt in der Anfrage" });
     }
     // Rufe den Benutzer aus der Datenbank ab
-    const loggedUser = await userModel.findById(userId);
+    const loggedUser = await userModel.findById(id);
     // Überprüfe, ob der Benutzer gefunden wurde
     if (!loggedUser) {
       return res.status(404).json({ message: "Benutzer nicht gefunden" });
@@ -55,8 +51,9 @@ export const getUserById = async (req, res) => {
       _id: loggedUser._id,
       name: loggedUser.name,
       email: loggedUser.email,
+      items: loggedUser.items,
     };
-    res.json(userInfo);
+    res.status(200).json(userInfo);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -75,14 +72,8 @@ export const getAllUsers = async (req, res) => {
       email: user.email,
     }));
 
-
-
-
     res.json(usersInfo);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
-
-
-
