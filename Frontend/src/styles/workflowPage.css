@@ -1,0 +1,52 @@
+* {
+  box-sizing: border-box;
+}
+
+/* Set a body margin to avoid default body margin */
+body {
+  margin: 0;
+}
+.workflow-container {
+  margin: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.main-navbar {
+  border-bottom: 1px solid rgb(92, 114, 114);
+  height: 50px;
+  background-color: rgb(27, 47, 52);
+  width: 100;
+}
+.main-container {
+  background-color: #81b29a;
+  /* height: 100vh; */
+  /* width: 100vw; */
+
+  display: flex;
+  flex-wrap: nowrap;
+}
+.left-main-container {
+  border-right: 1px solid rgb(92, 114, 114);
+  background-color: rgb(32, 43, 45);
+  min-height: 100vh;
+  width: 300px;
+  min-width: 150px;
+}
+.ca-container {
+  width: 100%;
+}
+.card-header {
+  height: 50px;
+  background-color: #3d564a;
+  border-bottom: 1px solid rgb(92, 114, 114);
+}
+h4 {
+  padding: 15px;
+  border-bottom: 1px solid rgb(92, 114, 114);
+  color: rgb(146, 165, 165);
+
+  height: 50px;
+}
