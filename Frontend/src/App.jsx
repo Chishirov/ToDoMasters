@@ -1,12 +1,17 @@
-
 import "./App.css";
 import Login from "./components/Login.jsx";
 import { useContext, useEffect, useState } from "react";
 import cookie from "js-cookie"; // cookie parser
 
 import WorkFlowPage from "./components/WorkFlowPage.jsx";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
 import { UserContext } from "./context/UserContext.jsx";
+import router from "./utils/Router.jsx";
 
 function App() {
   const {
@@ -51,15 +56,9 @@ function App() {
     fetchData();
   }, [hasToken]);
   return (
-    <div>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/workflow" element={<WorkFlowPage />} />
-          {/* Define other routes as needed */}
-        </Routes>
-      </Router>
-    </div>
+    <>
+      <RouterProvider router={router}></RouterProvider>
+    </>
   );
 }
 

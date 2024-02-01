@@ -1,12 +1,15 @@
 import React from "react";
 import WorkFlowCard from "./WorkFlowCard.jsx";
 import "../styles/workflowPage.css";
+import Logout from "./Logout.jsx";
 function WorkFlowPage() {
   const titles = ["BRAINSTORM 🤔", "TODO 📚", "DOING ⚙️", "DONE 🙌🏽"];
 
   return (
     <>
-      <div className="main-navbar"></div>
+      <div className="main-navbar">
+        <Logout />
+      </div>
       <div className="main-container">
         <div className="left-main-container">
           <h4>Your boards</h4>

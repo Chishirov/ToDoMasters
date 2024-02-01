@@ -9,6 +9,7 @@ const UserContextProvider = ({ children }) => {
   const [userId, setUserId] = useState();
   console.log("user in context", user);
 
+  const backendApiUrl = "http://localhost:3005/api";
   return (
     <UserContext.Provider
       value={{
@@ -18,7 +19,7 @@ const UserContextProvider = ({ children }) => {
         setError,
         userId,
         setUserId,
-
+        backendApiUrl,
         msg,
         setMsg,
         hasToken,

@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
 import { UserContext } from "../context/UserContext.jsx";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 function Logout() {
+  const navigate = useNavigate();
   const {
     hasToken,
-    resetMessages,
+    // resetMessages,
+
     setMsg,
     setHasToken,
     setUser,
@@ -14,7 +17,7 @@ function Logout() {
   const logoutHandler = async (e) => {
     e.preventDefault();
 
-    resetMessages();
+    // resetMessages();
 
     try {
       const response = await axios.post(
@@ -27,9 +30,11 @@ function Logout() {
       setMsg("Erfolgreich ausgeloggt.");
       setHasToken(false);
       setUser({});
+      navigate("/login");
       // setRerender((prev) => !prev); // Force re-render
     } catch (error) {
-      setErrorMessages(error);
+      // setErrorMessages(error);
+      console.error({ messageError: error });
     }
   };
 

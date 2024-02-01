@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import cookie from "js-cookie"; // cookie parser
 import axios from "axios";
 import { UserContext } from "../context/UserContext.jsx";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const navigate = useNavigate();
   const {
+    backendApiUrl,
     hasToken,
     setHasToken,
     error,
@@ -20,8 +21,6 @@ function Login() {
   } = useContext(UserContext);
 
   console.log("userId", userId);
-
-  const backendApiUrl = "http://localhost:3005/api";
 
   const resetMessages = () => {
     setMsg("");
@@ -175,53 +174,69 @@ function Login() {
 
   return (
     <>
-      <h2>
-        DEBUG-Nachricht: {hasToken ? "User ist eingeloggt" : "NICHT eingeloggt"}{" "}
-      </h2>
-      <p className="info">
-        <span style={{ color: "red" }}>{error}</span> <span>{msg}</span>
-      </p>
-
       {!hasToken ? (
         <>
-          <h2>Sign Up</h2>
-          <form onSubmit={signUpHandler}>
-            <label htmlFor="email">Email: </label>
-            <input type="email" name="email" />
-            <br />
-            <label htmlFor="password">Password: </label>
-            <input type="password" name="password" />
-            <br />
-            <button type="submit">Sign Up</button>
-          </form>
-
-          <hr />
-          <h2>Login</h2>
-          <form onSubmit={loginHandler}>
-            <label htmlFor="email">Email: </label>
-            <input type="email" name="email" />
-            <br />
-            <label htmlFor="password">Password: </label>
-            <input type="password" name="password" />
-            <br />
-            <button type="submit">Log In</button>
-          </form>
+          <div className="login-box">
+            <p>Login</p>
+            <form onSubmit={loginHandler}>
+              <div className="user-box">
+                <input
+                  required=""
+                  placeholder="Enter your email"
+                  id="email"
+                  name="email"
+                  type="email"
+                />
+                <label htmlFor="email">Email</label>
+              </div>
+              <div className="user-box">
+                <input
+                  required=""
+                  placeholder="Enter your password"
+                  id="password"
+                  name="password"
+                  type="password"
+                />
+                <label htmlFor="password">Password</label>
+              </div>
+              <button type="submit">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Submit
+              </button>
+            </form>
+            <p>
+               Forgot Password ?{" "}
+              {/* <Link to="/changePassword">Forgot Password</Link> */}
+            </p>
+          </div>
         </>
       ) : (
-        <>
-          <button onClick={getUserByIdHandler}>Get User by ID</button>
-
-          <hr />
-          <form onSubmit={logoutHandler}>
-            <button type="submit">Logout</button>
-          </form>
-        </>
+        ""
+        // <>
+        //   <Navigate to="/logout" /> state = {{ from: location }}
+        // </>
       )}
-      <hr />
-      <button onClick={userInfoHandler}>Zeige persönliche Daten</button>
-      {hasToken && <p>i had the id</p>}
+      {/* <hr />
+            <button onClick={userInfoHandler}>Show personal information</button>
+            {hasToken && <p>i had the id</p>} */}
     </>
   );
 }
 
 export default Login;
+//  <>
+//         <button onClick={getUserByIdHandler}>Get User by ID</button>
+
+//         <hr />
+//         <form onSubmit={logoutHandler}>
+//           <button type="submit">Logout</button>
+//         </form>
+//       </>
+//     )}
+//     <hr />
+//     <button onClick={userInfoHandler}>Zeige persönliche Daten</button>
+//     {hasToken && <p>i had the id</p>}
+//   </>
