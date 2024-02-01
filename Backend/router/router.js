@@ -7,7 +7,11 @@ import {
   postLoginController,
   postLogoutController,
 } from "../controllers/loginController.js";
+<<<<<<< HEAD
 import { getAllUsers, getUserInfo } from "../controllers/userController.js";
+=======
+import { getUserById, getUserInfo } from "../controllers/userController.js";
+>>>>>>> origin/main
 import authintcatUser from "../middlewares/authintcatUser.js";
 import { validateUser } from "../middlewares/validateUser.js";
 import { validateSchema } from "../middlewares/validateSchema.js";
@@ -20,8 +24,13 @@ router.post("/login", limiter, postLoginController);
 router.post("/logout", postLogoutController);
 
 router.get("/userinfo", authintcatUser, getUserInfo);
+<<<<<<< HEAD
 router.get('/users', getAllUsers);
 router.get('/users/:userId', getUserInfo);
+=======
+outer.get("/users", getAllUsers);
+router.get("/users/:userId", getUserById);
+>>>>>>> origin/main
 
 // router.post("/todos", authorizeUser, createTodo);
 
