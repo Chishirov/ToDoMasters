@@ -6,7 +6,7 @@ import { connectMongoose } from "./util/connectionMongoose.js";
 import router from "./router/router.js";
 import { validateSchema } from "./middlewares/validateSchema.js";
 import "dotenv/config.js";
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 4001;
 
 // App erstellen
 const app = express();
@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
 await connectMongoose();
 
 // Routes
-app.use("/",  router);
+app.use("/", router);
 
 // Server Starten
 app.listen(PORT, () => {

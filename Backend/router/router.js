@@ -14,14 +14,14 @@ import { validateSchema } from "../middlewares/validateSchema.js";
 const router = express.Router();
 
 // sign up
-router.post("/signup", validateUser,  postSignupController);
+router.post("/api/signup", validateUser, postSignupController);
 //log in
-router.post("/login", limiter, postLoginController);
-router.post("/logout", postLogoutController);
+router.post("/api/login", limiter, postLoginController);
+router.post("/api/logout", postLogoutController);
 
-router.get("/userinfo", authintcatUser, getUserInfo);
-router.get('/users', getAllUsers);
-router.get('/users/:userId', getUserInfo);
+router.get("/api/userinfo", authintcatUser, getUserInfo);
+router.get("/api/users", getAllUsers);
+router.get("/api/users/:userId", getUserInfo);
 
 // router.post("/todos", authorizeUser, createTodo);
 
