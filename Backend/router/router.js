@@ -15,7 +15,10 @@ import {
 import authintcatUser from "../middlewares/authintcatUser.js";
 import { validateUser } from "../middlewares/validateUser.js";
 import { validateSchema } from "../middlewares/validateSchema.js";
-import { postItem } from "../controllers/itemsController.js";
+import {
+  postItem,
+  updateItemCategory,
+} from "../controllers/itemsController.js";
 const router = express.Router();
 
 // sign up
@@ -30,13 +33,6 @@ router.get("/api/user/:id", getUserById);
 
 //////
 router.post("/api/postitem/:id", postItem);
-
-// router.post("/todos", authorizeUser, createTodo);
-
-// router.get("/todos", authorizeUser, getAllTodos);
-
-// router.put("/todos/:todoId", authorizeUser, updateTodo);
-
-// router.delete("/todos/:todoId", authorizeUser, deleteTodo);
+router.put("/api/updateItemCategory/:userId/:itemId", updateItemCategory);
 
 export default router;

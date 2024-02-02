@@ -54,7 +54,7 @@ function Login() {
 
       console.log("Erfolgreich registriert:", resp.data);
       setMsg("Du hast dich erfolgreich registriert.");
-      navigate("/login");
+      navigate("/");
       // setRerender((prev) => !prev); // Force re-render
     } catch (error) {
       setErrorMessages(error);
