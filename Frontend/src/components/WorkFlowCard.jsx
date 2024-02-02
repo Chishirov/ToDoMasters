@@ -21,12 +21,12 @@ function WorkFlowCard({ titleName }) {
   const handleDrop = async (item) => {
     try {
       // Update the category of the item in the backend
-      await axios.put(
+      const response = await axios.put(
         `${backendApiUrl}/updateItemCategory/${userId}/${item.itemId}`, // Adjust the API endpoint accordingly
         { category: titleName },
         { withCredentials: true }
       );
-
+      console.log("drag response: ", response.data);
       // Update the state with the new data
       await getUserByIdHandler();
     } catch (error) {
