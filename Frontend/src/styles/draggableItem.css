@@ -2,8 +2,12 @@
 .draggable-item {
   width: 96%;
   background-color: #313b36;
-  padding: 10px;
-  margin-bottom: 5px;
+  padding: 5px;
+  margin-bottom: 1px;
+  min-height: 40px;
+  word-wrap: break-word;
+  max-height: 80px;
+  overflow: auto;
   border-radius: 8px;
   cursor: grab;
   transition: background-color 0.3s ease;
@@ -11,5 +15,5 @@
 
 .draggable-item:hover {
   background-color: #2d3632;
-  border: 1px solid #6e7371;
+  border: 2px solid #a3bfb3;
 }
