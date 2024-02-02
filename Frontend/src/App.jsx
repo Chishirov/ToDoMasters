@@ -2,7 +2,7 @@
 import Login from "./components/Login.jsx";
 import { useContext, useEffect, useState } from "react";
 import cookie from "js-cookie"; // cookie parser
-
+// import "./styles/app.css";
 import WorkFlowPage from "./components/WorkFlowPage.jsx";
 import {
   BrowserRouter as Router,
@@ -56,9 +56,9 @@ function App() {
     fetchData();
   }, [hasToken]);
   return (
-    <>
+    <div className="app-container">
       <RouterProvider router={router}></RouterProvider>
-    </>
+    </div>
   );
 }
 

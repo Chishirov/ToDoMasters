@@ -1,63 +1,60 @@
+// WorkFlowCard.jsx
 import React, { useContext, useEffect, useState } from "react";
-import "../styles/workFlowCard.css";
+import { useDrag, useDrop } from "react-dnd";
+import { ItemTypes } from "./ItemTypes"; // Import the ItemTypes
 import axios from "axios";
-import { UserContext } from "../context/UserContext.jsx";
-
+import { UserContext } from "../context/UserContext";
+import DraggableItem from "./DraggableItem"; // Import the DraggableItem component
+import "../styles/workFlowCard.css";
 function WorkFlowCard({ titleName }) {
-  const {
-    hasToken,
-    setHasToken,
-    error,
-    setError,
-    msg,
-    setMsg,
-    user,
-    setUser,
-    backendApiUrl,
-    userId,
-    setUserId,
-  } = useContext(UserContext);
+  const { hasToken, backendApiUrl, userId } = useContext(UserContext);
+
   const [items, setItems] = useState([]);
   const [klicked, setKlicked] = useState(false);
   const [text, setText] = useState("");
 
-  console.log(userId);
+  const [, drop] = useDrop({
+    accept: ItemTypes.ITEM,
+    drop: (item) => handleDrop(item),
+  });
+
+  const handleDrop = async (item) => {
+    try {
+      // Update the category of the item in the backend
+      const response = await axios.put(
+        `${backendApiUrl}/updateItemCategory/${userId}/${item.itemId}`, // Adjust the API endpoint accordingly
+        { category: titleName },
+        { withCredentials: true }
+      );
+      console.log("drag response: ", response.data);
+      // Update the state with the new data
+      await getUserByIdHandler();
+    } catch (error) {
+      console.error("Error updating item category:", error);
+    }
+  };
 
   const handelKlick = () => {
     setKlicked(true);
   };
+
   const getUserByIdHandler = async () => {
     if (userId) {
       try {
-        const resp = await axios.get(`${backendApiUrl}/user/${user._id}`, {
+        const resp = await axios.get(`${backendApiUrl}/user/${userId}`, {
           withCredentials: true,
         });
-
-        console.log("Server response:", resp.data);
 
         setItems(resp.data.items);
       } catch (error) {
         console.error("Error fetching user data:", error);
-
-        // Log additional details about the error
-        if (error.response) {
-          console.error("Server responded with:", error.response.data);
-        } else if (error.request) {
-          console.error("No response received. Request made:", error.request);
-        } else {
-          console.error("Error setting up the request:", error.message);
-        }
       }
     }
   };
 
-  // Filter items based on the current category
-
   const handelSavedTexts = async () => {
-    console.log("Inside handelSavedTexts");
-    const value = text.trim(); // Remove leading and trailing whitespaces
+    const value = text.trim();
     if (value !== "") {
-      console.log("user._id", user._id);
       try {
         const response = await axios.post(
           `${backendApiUrl}/postitem/${userId}`,
@@ -65,40 +62,39 @@ function WorkFlowCard({ titleName }) {
           { withCredentials: true }
         );
 
-        console.log("Server response after adding item:", response.data);
-
-        setText(""); // Clear the input field
-        setKlicked(false); // Close the input field after saving the text
-
+        setText("");
+        setKlicked(false);
         await getUserByIdHandler();
-        // setItems(response.data);
       } catch (error) {
         console.log(error);
       }
     }
   };
-  const filteredItems = items.filter((item) => item.category === titleName);
+
   useEffect(() => {
     const fetchData = async () => {
       await getUserByIdHandler();
     };
     fetchData();
-  }, [hasToken]);
-  console.log(items);
+  }, [hasToken, titleName, items]);
+
   return (
     <>
       {hasToken && (
-        <div className="card1">
+        <div className="card1" ref={drop}>
           <p className="card-title">{titleName} </p>
           <div className="card-conetnt">
             <div className="card-image"></div>
-            {filteredItems.length > 0 && (
-              <ul className="card-list">
-                {filteredItems.map((item, index) => (
-                  <li key={index}>{item.title}</li>
-                ))}
-              </ul>
-            )}
+            {items
+              .filter((item) => item.category === titleName)
+              .map((item, index) => (
+                <DraggableItem
+                  key={index}
+                  title={item.title}
+                  category={item.category}
+                  itemId={item._id} // Add the item ID to identify it uniquely
+                />
+              ))}
           </div>
           {klicked && (
             <div className="card-body">

@@ -15,7 +15,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
 
   scroll-margin: 8px;
   white-space: normal;
@@ -29,6 +29,7 @@ body {
   border-radius: 20px;
   background: #212121;
   overflow: auto;
+
 
   /* box-shadow: 5px 5px 8px #1b1b1b, -5px -5px 8px #272727; */
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
@@ -131,7 +132,7 @@ body {
 
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  /* gap: 5px; */
 }
 .card-list li {
   background-color: #3e3e3e;
