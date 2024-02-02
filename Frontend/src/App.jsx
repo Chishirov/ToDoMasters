@@ -1,4 +1,4 @@
-import "./App.css";
+// import "./App.css";
 import Login from "./components/Login.jsx";
 import { useContext, useEffect, useState } from "react";
 import cookie from "js-cookie"; // cookie parser

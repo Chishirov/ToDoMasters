@@ -211,6 +211,15 @@ function Login() {
               Forgot Password ?{" "}
               {/* <Link to="/changePassword">Forgot Password</Link> */}
             </p>
+            <p className="sign-up-label">
+              Don't have an account?
+              <button
+                onClick={() => navigate("/signup")}
+                className="sign-up-link"
+              >
+                Sign up
+              </button>
+            </p>
           </div>
         </>
       ) : (

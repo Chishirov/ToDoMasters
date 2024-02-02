@@ -30,7 +30,7 @@ function Logout() {
       setMsg("Erfolgreich ausgeloggt.");
       setHasToken(false);
       setUser({});
-      navigate("/login");
+      navigate("/");
       // setRerender((prev) => !prev); // Force re-render
     } catch (error) {
       // setErrorMessages(error);

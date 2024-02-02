@@ -5,10 +5,10 @@ import Login from "../components/Login";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/signup",
     element: <Signup />,
   },
-  { path: "/login", element: <Login /> },
+  { path: "/", element: <Login /> },
   {
     path: "/workflow",
     element: <WorkFlowPage />,
