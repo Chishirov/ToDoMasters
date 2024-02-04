@@ -2,8 +2,9 @@ body {
   margin: 0;
   padding: 0;
 }
-Frontend/src/images/earth.webp .app-container {
-  background: url("Frontend/src/images/earth.webp") no-repeat center center
-    fixed;
+.app-container {
+  width: 100vw;
+  height: 100vh;
+  background: url("../images/image2.jpg") no-repeat center center fixed;
   background-size: cover;
 }

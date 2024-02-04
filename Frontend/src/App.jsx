@@ -1,31 +1,13 @@
-// import "./App.css";
-import Login from "./components/Login.jsx";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import cookie from "js-cookie"; // cookie parser
-// import "./styles/app.css";
-import WorkFlowPage from "./components/WorkFlowPage.jsx";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  RouterProvider,
-} from "react-router-dom";
+import "./styles/app.css";
+import { RouterProvider } from "react-router-dom";
 import { UserContext } from "./context/UserContext.jsx";
 import router from "./utils/Router.jsx";
 
 function App() {
-  const {
-    hasToken,
-    setHasToken,
-    error,
-    setError,
-    msg,
-    setMsg,
-    user,
-    setUser,
-    userId,
-    setUserId,
-  } = useContext(UserContext);
+  const { hasToken, setHasToken, setMsg, setUser, setUserId } =
+    useContext(UserContext);
 
   const handleIfUserHasToken = () => {
     console.log("handleIfUserHasToken aufgerufen");
