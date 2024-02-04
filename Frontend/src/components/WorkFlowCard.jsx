@@ -6,7 +6,7 @@ import axios from "axios";
 import { UserContext } from "../context/UserContext";
 import DraggableItem from "./DraggableItem"; // Import the DraggableItem component
 import "../styles/workFlowCard.css";
-function WorkFlowCard({ titleName }) {
+function WorkFlowCard({ titleName, image }) {
   const { hasToken, backendApiUrl, userId } = useContext(UserContext);
 
   const [items, setItems] = useState([]);
@@ -84,7 +84,10 @@ function WorkFlowCard({ titleName }) {
         <div className="card1" ref={drop}>
           <p className="card-title">{titleName} </p>
           <div className="card-conetnt">
-            <div className="card-image"></div>
+            <div
+              style={{ background: ` url(${image}) center/cover` }}
+              className="card-image"
+            ></div>
             {items
               .filter((item) => item.category === titleName)
               .map((item, index) => (

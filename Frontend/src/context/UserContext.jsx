@@ -7,6 +7,7 @@ const UserContextProvider = ({ children }) => {
   const [hasToken, setHasToken] = useState(false);
   const [user, setUser] = useState({});
   const [userId, setUserId] = useState();
+  const [users, setUsers] = useState([]);
   console.log("user in context", user);
 
   const backendApiUrl = "http://localhost:3005/api";
@@ -24,6 +25,8 @@ const UserContextProvider = ({ children }) => {
         setMsg,
         hasToken,
         setHasToken,
+        users,
+        setUsers,
       }}
     >
       {children}

@@ -30,7 +30,6 @@ body {
   background: #212121;
   overflow: auto;
 
-
   /* box-shadow: 5px 5px 8px #1b1b1b, -5px -5px 8px #272727; */
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
@@ -51,10 +50,7 @@ body {
 
 .card-image {
   min-height: 170px;
-  background-color: #313131;
   border-radius: 15px;
-  background: #313131;
-  /* box-shadow: inset 5px 5px 3px #2f2f2f, inset -5px -5px 3px #333333; */
   width: 96%;
 }
 
@@ -156,4 +152,5 @@ body {
   gap: 5px;
   overflow: auto;
   scrollbar-width: thin;
+  color: #dff8ec;
 }

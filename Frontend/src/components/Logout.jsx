@@ -39,14 +39,10 @@ function Logout() {
   };
 
   return (
-    <div className="form_area">
-      {hasToken ? (
-        <button className="btn" onClick={logoutHandler}>
-          Logout
-        </button>
-      ) : (
-        ""
-      )}
+    <div >
+      <button className="btn" onClick={logoutHandler}>
+        Logout
+      </button>
     </div>
   );
 }
