@@ -1,17 +1,20 @@
-// WorkFlowCard.jsx
+// workFlowCard.js
+
 import React, { useContext, useEffect, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import { ItemTypes } from "./ItemTypes"; // Import the ItemTypes
+import { ItemTypes } from "./ItemTypes";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
-import DraggableItem from "./DraggableItem"; // Import the DraggableItem component
+import DraggableItem from "./DraggableItem";
 import "../styles/workFlowCard.css";
+
 function WorkFlowCard({ titleName }) {
   const { hasToken, backendApiUrl, userId } = useContext(UserContext);
 
   const [items, setItems] = useState([]);
   const [klicked, setKlicked] = useState(false);
   const [text, setText] = useState("");
+  const [itemId, setItemId] = useState(null);
 
   const [, drop] = useDrop({
     accept: ItemTypes.ITEM,
@@ -20,14 +23,12 @@ function WorkFlowCard({ titleName }) {
 
   const handleDrop = async (item) => {
     try {
-      // Update the category of the item in the backend
       const response = await axios.put(
-        `${backendApiUrl}/updateItemCategory/${userId}/${item.itemId}`, // Adjust the API endpoint accordingly
+        `${backendApiUrl}/updateItemCategory/${userId}/${item.itemId}`,
         { category: titleName },
         { withCredentials: true }
       );
       console.log("drag response: ", response.data);
-      // Update the state with the new data
       await getUserByIdHandler();
     } catch (error) {
       console.error("Error updating item category:", error);
@@ -36,6 +37,32 @@ function WorkFlowCard({ titleName }) {
 
   const handelKlick = () => {
     setKlicked(true);
+    setItemId(null);
+  };
+
+  const handleUpdateItem = async (itemId) => {
+    try {
+      const currentItem = items.find((item) => item._id === itemId);
+      setText(currentItem ? currentItem.title : "");
+      setKlicked(true);
+      setItemId(itemId);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteItem = async (itemId) => {
+    try {
+      const response = await axios.delete(
+        `${backendApiUrl}/users/${userId}/items/${itemId}`,
+        { withCredentials: true }
+      );
+      console.log("Server response after deleting item:", response.data);
+
+      await getUserByIdHandler();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getUserByIdHandler = async () => {
@@ -44,7 +71,6 @@ function WorkFlowCard({ titleName }) {
         const resp = await axios.get(`${backendApiUrl}/user/${userId}`, {
           withCredentials: true,
         });
-
         setItems(resp.data.items);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -56,14 +82,26 @@ function WorkFlowCard({ titleName }) {
     const value = text.trim();
     if (value !== "") {
       try {
-        const response = await axios.post(
-          `${backendApiUrl}/postitem/${userId}`,
-          { title: value, category: titleName },
-          { withCredentials: true }
-        );
+        if (itemId !== null) {
+          const response = await axios.put(
+            `${backendApiUrl}/users/${userId}/items/${itemId}`,
+            { title: value },
+            { withCredentials: true }
+          );
+          console.log("Server response after updating item:", response.data);
+        } else {
+          const response = await axios.post(
+            `${backendApiUrl}/postitem/${userId}`,
+            { title: value, category: titleName },
+            { withCredentials: true }
+          );
+          console.log("Server response after adding item:", response.data);
+        }
 
         setText("");
         setKlicked(false);
+        setItemId(null);
+
         await getUserByIdHandler();
       } catch (error) {
         console.log(error);
@@ -86,14 +124,23 @@ function WorkFlowCard({ titleName }) {
           <div className="card-conetnt">
             <div className="card-image"></div>
             {items
-              .filter((item) => item.category === titleName)
-              .map((item, index) => (
-                <DraggableItem
-                  key={index}
-                  title={item.title}
-                  category={item.category}
-                  itemId={item._id} // Add the item ID to identify it uniquely
-                />
+  .filter((item) => item.category === titleName)
+  .map((item, index) => (
+    <div key={index} className="item-container">
+      <DraggableItem
+        title={item.title}
+        category={item.category}
+        itemId={item._id}
+      />
+      <div className="button-container">
+        <button className="update-button" onClick={() => handleUpdateItem(item._id)}>
+          Update
+        </button>
+        <button className="delete-button" onClick={() => handleDeleteItem(item._id)}>
+          Delete
+        </button>
+      </div>
+    </div>
               ))}
           </div>
           {klicked && (
@@ -109,8 +156,8 @@ function WorkFlowCard({ titleName }) {
           )}
           {klicked ? (
             <div className="adding-card">
-              <button onClick={() => handelSavedTexts()}>add</button>
-              <button onClick={() => setKlicked(false)}>close</button>
+              <button onClick={() => handelSavedTexts()}>Save</button>
+              <button onClick={() => setKlicked(false)}>Cancel</button>
             </div>
           ) : (
             <div className="add-to-card">

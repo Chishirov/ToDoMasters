@@ -157,3 +157,52 @@ body {
   overflow: auto;
   scrollbar-width: thin;
 }
+
+/* buttons beim hover */
+
+.item-container {
+  position: relative;
+}
+
+.button-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+ 
+  visibility: hidden;
+}
+
+.item-container:hover .button-container {
+  visibility: visible;
+}
+
+.update-button,
+.delete-button {
+  /* Stilisierung der Buttons */
+  display: inline-block;
+  .item-container {
+    position: relative;
+  }
+  
+  .button-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    visibility: hidden;
+  }
+  
+  .item-container:hover .button-container {
+    visibility: visible;
+  }
+  
+  .update-button,
+  .delete-button {
+    /* Stilisierung der Buttons */
+    display: inline-block;
+    margin-left: 5px;
+  }
+  
+  
+}
+

@@ -56,3 +56,60 @@ export const updateItemCategory = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+export const postUpdate = async (req, res) => {
+  const userId = req.params.id;
+  const itemId = req.params.itemId;
+
+  try {
+    const user = await userModel.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const itemIndex = user.items.findIndex(item => item._id.toString() === itemId);
+
+    if (itemIndex === -1) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+
+    user.items[itemIndex].title = req.body.title || user.items[itemIndex].title;
+    user.items[itemIndex].category = req.body.category || user.items[itemIndex].category;
+
+    await user.save();
+
+    res.status(200).json({ message: "Item updated successfully", updatedItem: user.items[itemIndex] });
+  } catch (error) {
+    console.error("Error updating item:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export const postDelete = async (req, res) => {
+  const userId = req.params.id;
+  const itemId = req.params.itemId;
+
+  try {
+    const user = await userModel.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const itemIndex = user.items.findIndex(item => item._id.toString() === itemId);
+
+    if (itemIndex === -1) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+
+    const deletedItem = user.items.splice(itemIndex, 1);
+    await user.save();
+
+    res.status(200).json({ message: "Item deleted successfully", deletedItem });
+  } catch (error) {
+    console.error("Error deleting item:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
