@@ -3,12 +3,12 @@ import React, { useState, useEffect } from "react";
 const IntroAnimation = () => {
   const [displayText, setDisplayText] = useState("");
   const textContent =
-    "Master Todo App is your go-to solution for efficient task management and workflow organization. Whether you're an individual or part of a team, our app simplifies the process of managing your to-dos, making productivity a breeze.";
+    "Maaster Todo App is your go-to solution for efficient task management and workflow organization. Whether you're an individual or part of a team, our app simplifies the process of managing your to-dos, making productivity a breeze.";
 
   useEffect(() => {
     let index = 0;
     const intervalId = setInterval(() => {
-      if (index < textContent.length) {
+      if (index < textContent.length - 1) {
         setDisplayText((prevText) => prevText + textContent[index]);
         index++;
         if (textContent[index] === undefined) {
