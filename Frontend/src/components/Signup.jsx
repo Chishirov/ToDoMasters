@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import cookie from "js-cookie"; // cookie parser
+import cookie from "js-cookie";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +17,8 @@ function Login() {
     setUserId,
   } = useContext(UserContext);
 
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
   const resetMessages = () => {
@@ -25,12 +27,35 @@ function Login() {
     setPasswordError("");
   };
 
+  const resetNameEmailErrors = () => {
+    setNameError("");
+    setEmailError("");
+  };
+
   const setErrorMessages = (error) => {
     if (error.response) {
       setError(error.response.data.error);
     } else {
       setError(error.message);
     }
+  };
+
+  const isNameValid = (name) => {
+    if (name.trim() === "") {
+      setNameError("Der Name darf nicht leer sein.");
+      return false;
+    }
+    return true;
+  };
+
+  const isEmailValid = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      setEmailError("Die E-Mail-Adresse ist ungültig.");
+      return false;
+    }
+    return true;
   };
 
   const isPasswordValid = (password) => {
@@ -65,8 +90,9 @@ function Login() {
     const password = form.password.value;
 
     resetMessages();
+    resetNameEmailErrors();
 
-    if (!isPasswordValid(password)) {
+    if (!isNameValid(name) || !isEmailValid(email) || !isPasswordValid(password)) {
       return;
     }
 
@@ -115,7 +141,7 @@ function Login() {
         <form onSubmit={signUpHandler}>
           <div className="user-box">
             <input
-              required
+              required=""
               placeholder="Enter your Name"
               id="name"
               name="name"
@@ -123,9 +149,10 @@ function Login() {
             />
             <label htmlFor="name">Name</label>
           </div>
+          {nameError && <p className="error-message" style={{ color: "orange" }}>{nameError}</p>}
           <div className="user-box">
             <input
-              required
+              required=""
               placeholder="Enter your email"
               id="email"
               name="email"
@@ -133,9 +160,10 @@ function Login() {
             />
             <label htmlFor="email">Email</label>
           </div>
+          {emailError && <p className="error-message" style={{ color: "orange" }}>{emailError}</p>}
           <div className="user-box">
             <input
-              required
+              required=""
               placeholder="Enter your password"
               id="password"
               name="password"
@@ -143,11 +171,7 @@ function Login() {
             />
             <label htmlFor="password">Password</label>
           </div>
-          {passwordError && (
-            <p className="error-message" style={{ color: "orange" }}>
-              {passwordError}
-            </p>
-          )}
+          {passwordError && <p className="error-message" style={{ color: "orange" }}>{passwordError}</p>}
           <button type="submit">
             <span></span>
             <span></span>
