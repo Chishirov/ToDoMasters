@@ -92,7 +92,11 @@ function Login() {
     resetMessages();
     resetNameEmailErrors();
 
-    if (!isNameValid(name) || !isEmailValid(email) || !isPasswordValid(password)) {
+    if (
+      !isNameValid(name) ||
+      !isEmailValid(email) ||
+      !isPasswordValid(password)
+    ) {
       return;
     }
 
@@ -105,7 +109,7 @@ function Login() {
 
       console.log("Erfolgreich registriert:", resp.data);
       setMsg("Du hast dich erfolgreich registriert.");
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       setErrorMessages(error);
       console.log("Fehler beim Anmelden:", error);
@@ -149,7 +153,11 @@ function Login() {
             />
             <label htmlFor="name">Name</label>
           </div>
-          {nameError && <p className="error-message" style={{ color: "orange" }}>{nameError}</p>}
+          {nameError && (
+            <p className="error-message" style={{ color: "orange" }}>
+              {nameError}
+            </p>
+          )}
           <div className="user-box">
             <input
               required=""
@@ -160,7 +168,11 @@ function Login() {
             />
             <label htmlFor="email">Email</label>
           </div>
-          {emailError && <p className="error-message" style={{ color: "orange" }}>{emailError}</p>}
+          {emailError && (
+            <p className="error-message" style={{ color: "orange" }}>
+              {emailError}
+            </p>
+          )}
           <div className="user-box">
             <input
               required=""
@@ -171,7 +183,11 @@ function Login() {
             />
             <label htmlFor="password">Password</label>
           </div>
-          {passwordError && <p className="error-message" style={{ color: "orange" }}>{passwordError}</p>}
+          {passwordError && (
+            <p className="error-message" style={{ color: "orange" }}>
+              {passwordError}
+            </p>
+          )}
           <button type="submit">
             <span></span>
             <span></span>
