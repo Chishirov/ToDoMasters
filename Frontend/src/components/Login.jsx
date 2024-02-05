@@ -210,11 +210,10 @@ function Login() {
 
             <hr className="br-style" />
             <p className="p-style">
-
-              Forgot Password ?{" "}
+              Forgot Password ? <br />
               <button
                 onClick={() => navigate("/update-password")}
-                className="sign-up-link"
+                className="sign-up-link btn-style-secondary"
               >
                 click
               </button>

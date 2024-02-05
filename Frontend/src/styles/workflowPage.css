@@ -17,12 +17,22 @@ body {
 .main-navbar {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
+
+  justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid rgb(92, 114, 114);
-  height: 50px;
+  height: 70px;
   background-color: rgb(27, 47, 52);
   padding-right: 50px;
+}
+.logo {
+  /* position: relative;
+  float: left;
+  left: 0; */
+  margin-left: 20px;
+  height: 50px;
+  width: 80px;
+  object-fit: contain;
 }
 .main-container {
   background-color: #81b29a;

@@ -9,6 +9,7 @@ import todo from "../images/todo.jpg";
 import brainstorm from "../images/brainstorm.jpeg";
 import doing from "../images/doing.jpeg";
 import done from "../images/done.jpeg";
+import logo from "../images/logo-no-background.png";
 import { UserContext } from "../context/UserContext.jsx";
 import axios from "axios";
 
@@ -35,6 +36,7 @@ function WorkFlowPage() {
     <DndProvider backend={HTML5Backend}>
       <>
         <div className="main-navbar">
+          <img className="logo" src={logo} alt="" />
           <DropDown />
         </div>
         <div className="main-container">
