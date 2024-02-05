@@ -137,13 +137,13 @@ function WorkFlowCard({ titleName, image }) {
                   />
                   <div className="button-container">
                     <button
-                      className="update-button"
+                      className="update-button  btn-icon"
                       onClick={() => handleUpdateItem(item._id)}
                     >
                       <i className="fa-solid fa-pencil"></i>
                     </button>
                     <button
-                      className="delete-button"
+                      className="delete-button  btn-icon"
                       onClick={() => handleDeleteItem(item._id)}
                     >
                       <i className="fa-solid fa-trash-can"></i>
@@ -165,8 +165,18 @@ function WorkFlowCard({ titleName, image }) {
           )}
           {klicked ? (
             <div className="adding-card">
-              <button onClick={() => handelSavedTexts()}>Save</button>
-              <button onClick={() => setKlicked(false)}>Cancel</button>
+              <button
+                onClick={() => handelSavedTexts()}
+                className="btn-style-primary"
+              >
+                Save
+              </button>
+              <button
+                onClick={() => setKlicked(false)}
+                className="btn-style-primary"
+              >
+                Cancel
+              </button>
             </div>
           ) : (
             <div className="add-to-card">
