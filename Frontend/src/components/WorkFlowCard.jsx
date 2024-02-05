@@ -9,9 +9,6 @@ import DraggableItem from "./DraggableItem";
 import "../styles/workFlowCard.css";
 
 function WorkFlowCard({ titleName, image }) {
-
-
-
   const { hasToken, backendApiUrl, userId } = useContext(UserContext);
 
   const [items, setItems] = useState([]);
@@ -143,13 +140,13 @@ function WorkFlowCard({ titleName, image }) {
                       className="update-button"
                       onClick={() => handleUpdateItem(item._id)}
                     >
-                      <i class="fa-solid fa-pencil"></i>
+                      <i className="fa-solid fa-pencil"></i>
                     </button>
                     <button
                       className="delete-button"
                       onClick={() => handleDeleteItem(item._id)}
                     >
-                      <i class="fa-solid fa-trash-can"></i>
+                      <i className="fa-solid fa-trash-can"></i>
                     </button>
                   </div>
                 </div>
