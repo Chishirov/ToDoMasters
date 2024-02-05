@@ -210,7 +210,7 @@ function Login() {
             />
             <label htmlFor="password">Password</label>
           </div>
-          <button type="submit">
+          <button type="submit" className="btn-style">
             <span></span>
             <span></span>
             <span></span>

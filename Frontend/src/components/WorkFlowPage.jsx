@@ -64,8 +64,9 @@ function WorkFlowPage() {
                 <div className="tooltip-container">
                   <span className="text">
                     <div className="flowcard-header-users">
-                      <button>
-                        <i className="fa-solid fa-user-plus"> </i>Share
+                      <button className="btn-style hover">
+                        <i className="fa-solid fa-user-plus"> </i>
+                        Share
                       </button>
                     </div>
                   </span>

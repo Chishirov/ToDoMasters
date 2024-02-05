@@ -199,7 +199,7 @@ function Login() {
                 />
                 <label htmlFor="password">Password</label>
               </div>
-              <button type="submit">
+              <button type="submit" className="btn-style">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -207,15 +207,17 @@ function Login() {
                 Submit
               </button>
             </form>
-            <p>
+            <hr className="br-style" />
+            <p className="p-style">
               Forgot Password ?{" "}
               {/* <Link to="/changePassword">Forgot Password</Link> */}
             </p>
             <p className="sign-up-label">
               Don't have an account?
+              <br />
               <button
                 onClick={() => navigate("/signup")}
-                className="sign-up-link"
+                className="sign-up-link btn-style-secondary"
               >
                 Sign up
               </button>
