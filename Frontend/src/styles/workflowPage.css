@@ -31,6 +31,7 @@ body {
   width: 100%;
   display: flex;
   flex-wrap: nowrap;
+  background-color: #056f6f;
 }
 .left-main-container {
   border-right: 1px solid rgb(92, 114, 114);

@@ -24,7 +24,7 @@ import {
 const router = express.Router();
 
 // sign up
-router.post("/api/signup", validateUser, postSignupController);
+router.post("/api/signup", validateUser,validateSchema, postSignupController);
 //log in
 router.post("/api/login", limiter, postLoginController);
 router.post("/api/logout", postLogoutController);
