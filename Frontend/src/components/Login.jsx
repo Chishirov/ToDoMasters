@@ -207,8 +207,14 @@ function Login() {
                 Submit
               </button>
             </form>
-            <p>
+            <p className="sign-up-label">
               Forgot Password ?{" "}
+              <button
+                onClick={() => navigate("/update-password")}
+                className="sign-up-link"
+              >
+                click
+              </button>
               {/* <Link to="/changePassword">Forgot Password</Link> */}
             </p>
             <p className="sign-up-label">

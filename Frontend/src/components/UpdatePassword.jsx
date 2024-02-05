@@ -1,59 +1,72 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../context/UserContext.jsx";
+import { useNavigate } from "react-router-dom";
 
 function UpdatePassword() {
-  const {
-    hasToken,
-    password,
-    setPassword,
-    user,
-    resetMessages,
-    backendApiUrl,
-    formData,
-    setErrorMessages,
-  } = useContext(UserContext);
+  const { hasToken, user, backendApiUrl } = useContext(UserContext);
+  const navigate = useNavigate();
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
 
   const handlePasswordUpdate = async (e) => {
     e.preventDefault();
-    resetMessages();
+
     try {
-      const response = await axios.put(
+      await axios.put(
         `${backendApiUrl}/update-password`,
-        formData,
+        {
+          email: user.email,
+          currentPassword,
+          newPassword,
+        },
         {
           withCredentials: true,
         }
       );
-      console.log("Server Response:", response.data);
+
+      alert("Password updated successfully");
+      navigate("/workflow");
     } catch (error) {
-      setErrorMessages(error);
-      console.log("error while update-password:", error);
+      console.error("Error updating password:", error);
     }
   };
 
   return (
     <div className="form_area">
       {hasToken ? (
-        <div className="form_group">
+        <div className="login-box">
           <p>Logged in as: {user?.email}</p>
 
-          <label className="sub_title" htmlFor="password">
+          <label className="sub_title" htmlFor="currentPassword">
+            Current Password:
+          </label>
+          <input
+            className="form_style"
+            placeholder="Enter your current password"
+            id="currentPassword"
+            name="currentPassword"
+            type="password"
+            required
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+          />
+
+          <label className="sub_title" htmlFor="newPassword">
             New Password:
           </label>
           <input
             className="form_style"
-            placeholder="Enter your password"
-            id="password"
-            name="password"
+            placeholder="Enter your new password"
+            id="newPassword"
+            name="newPassword"
             type="password"
             required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
           />
-          <button className="btn" onClick={handlePasswordUpdate}>
-            Update Password
-          </button>
+
+          <button onClick={handlePasswordUpdate}>Update Password</button>
         </div>
       ) : (
         ""

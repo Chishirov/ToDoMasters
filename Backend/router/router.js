@@ -21,14 +21,15 @@ import {
   postUpdate,
   updateItemCategory,
 } from "../controllers/itemsController.js";
+import { postUpdatePwdController } from "../controllers/updatePassword.js";
 const router = express.Router();
 
 // sign up
-router.post("/api/signup", validateUser,validateSchema, postSignupController);
+router.post("/api/signup", validateUser, validateSchema, postSignupController);
 //log in
 router.post("/api/login", limiter, postLoginController);
 router.post("/api/logout", postLogoutController);
-
+router.put("/api/update-password", postUpdatePwdController);
 router.get("/api/userinfo", authintcatUser, getUserInfo);
 router.get("/api/users", getAllUsers);
 router.get("/api/user/:id", getUserById);
