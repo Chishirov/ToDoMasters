@@ -124,23 +124,29 @@ function WorkFlowCard({ titleName }) {
           <div className="card-conetnt">
             <div className="card-image"></div>
             {items
-  .filter((item) => item.category === titleName)
-  .map((item, index) => (
-    <div key={index} className="item-container">
-      <DraggableItem
-        title={item.title}
-        category={item.category}
-        itemId={item._id}
-      />
-      <div className="button-container">
-        <button className="update-button" onClick={() => handleUpdateItem(item._id)}>
-          Update
-        </button>
-        <button className="delete-button" onClick={() => handleDeleteItem(item._id)}>
-          Delete
-        </button>
-      </div>
-    </div>
+              .filter((item) => item.category === titleName)
+              .map((item, index) => (
+                <div key={index} className="item-container">
+                  <DraggableItem
+                    title={item.title}
+                    category={item.category}
+                    itemId={item._id}
+                  />
+                  <div className="button-container">
+                    <button
+                      className="update-button"
+                      onClick={() => handleUpdateItem(item._id)}
+                    >
+                      <i class="fa-solid fa-pencil"></i>
+                    </button>
+                    <button
+                      className="delete-button"
+                      onClick={() => handleDeleteItem(item._id)}
+                    >
+                      <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                  </div>
+                </div>
               ))}
           </div>
           {klicked && (
