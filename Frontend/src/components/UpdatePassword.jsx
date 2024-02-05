@@ -36,7 +36,7 @@ function UpdatePassword() {
     <div className="form_area">
       {hasToken ? (
         <div className="login-box">
-          <p>Logged in as: {user?.email}</p>
+          <p>Username : {user?.name}</p>
 
           <label className="sub_title" htmlFor="currentPassword">
             Current Password:
