@@ -4,27 +4,26 @@ import axios from "axios";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";
+
 function Login() {
   const navigate = useNavigate();
   const {
-    hasToken,
-    setHasToken,
-    error,
-    setError,
-    msg,
     setMsg,
+    setError,
     backendApiUrl,
     user,
+    setHasToken,
     setUser,
-    userId,
     setUserId,
   } = useContext(UserContext);
 
-  console.log("userId", userId);
+
+  const [passwordError, setPasswordError] = useState("");
 
   const resetMessages = () => {
     setMsg("");
     setError("");
+    setPasswordError("");
   };
 
   const setErrorMessages = (error) => {
@@ -33,6 +32,29 @@ function Login() {
     } else {
       setError(error.message);
     }
+  };
+
+  const isPasswordValid = (password) => {
+    const minLength = 8;
+
+    if (password.length < minLength) {
+      setPasswordError("Das Passwort muss mindestens 8 Zeichen lang sein.");
+      return false;
+    }
+
+    if (!/\d/.test(password)) {
+      setPasswordError("Das Passwort muss mindestens eine Zahl enthalten.");
+      return false;
+    }
+
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      setPasswordError(
+        "Das Passwort muss mindestens ein Sonderzeichen enthalten."
+      );
+      return false;
+    }
+
+    return true;
   };
 
   const signUpHandler = async (e) => {
@@ -45,6 +67,10 @@ function Login() {
 
     resetMessages();
 
+    if (!isPasswordValid(password)) {
+      return;
+    }
+
     try {
       const resp = await axios.post(`${backendApiUrl}/signup`, {
         name,
@@ -55,125 +81,33 @@ function Login() {
       console.log("Erfolgreich registriert:", resp.data);
       setMsg("Du hast dich erfolgreich registriert.");
       navigate("/");
-      // setRerender((prev) => !prev); // Force re-render
     } catch (error) {
       setErrorMessages(error);
-      console.log("error while signing up:", error);
+      console.log("Fehler beim Anmelden:", error);
     }
   };
 
-  // const loginHandler = async (e) => {
-  //   e.preventDefault();
-
-  //   const form = e.target;
-  //   const email = form.email.value;
-  //   const password = form.password.value;
-
-  //   resetMessages();
-
-  //   try {
-  //     const resp = await axios.post(
-  //       `${backendApiUrl}/login`,
-  //       {
-  //         email,
-  //         password,
-  //       },
-  //       {
-  //         withCredentials: true,
-  //       }
-  //     );
-  //     console.log("resp: ", resp.data.msg);
-  //     setMsg(`Erfolgreich eingeloggt: ${email}. JWT erhalten.`);
-  //     setHasToken(true);
-
-  //     navigate("/workflow");
-  //     // setRerender((prev) => !prev); // Force re-render
-  //   } catch (error) {
-  //     setErrorMessages(error);
-  //     console.log("error while logging in:", error);
-  //   }
-  // };
-
-  // const logoutHandler = async (e) => {
-  //   e.preventDefault();
-
-  //   resetMessages();
-
-  //   try {
-  //     const resp = await axios.post(
-  //       `${backendApiUrl}/logout`,
-  //       {},
-  //       { withCredentials: true }
-  //     );
-
-  //     console.log("Erfolgreich ausgeloggt", resp.data);
-  //     setMsg("Erfolgreich ausgeloggt.");
-  //     setHasToken(false);
-  //     // setRerender((prev) => !prev); // Force re-render
-  //   } catch (error) {
-  //     setErrorMessages(error);
-  //   }
-  // };
-
-  const handleIfUserHasToken = () => {
-    console.log("handleIfUserHasToken aufgerufen");
-
-    let JWTinfocookie = cookie.get("JWTinfo");
-
-    console.log("JWTinfo cookie", JWTinfocookie);
-    if (!JWTinfocookie) return;
-
-    JWTinfocookie = JWTinfocookie.replace("j:", "");
-    const cookieValueObj = JSON.parse(JWTinfocookie);
-    console.log("cookieValueObj", cookieValueObj);
-    setUserId(cookieValueObj.user._id);
-
-    const expirationInMs = new Date(cookieValueObj.expires) - new Date();
-    console.log("JWT läuft ab in", expirationInMs / 1000, "Sekunden");
-
-    if (expirationInMs <= 0) return;
-
-    setHasToken(true);
-    setUser(cookieValueObj.user);
-    setMsg(`Eingeloggter User: ${cookieValueObj.email}.`);
-  };
-
-  const userInfoHandler = async () => {
-    resetMessages();
-
-    try {
-      const resp = await axios.get(`${backendApiUrl}/userinfo`, {
-        withCredentials: true,
-      });
-      console.log("resp.data:", resp.data);
-      setMsg(resp.data);
-    } catch (error) {
-      setErrorMessages(error);
-    }
-  };
-  console.log("userId---", userId);
-  console.log("user._id---", user._id);
-  const getUserByIdHandler = async () => {
-    resetMessages();
-    if (userId) {
-      try {
-        const resp = await axios.get(`${backendApiUrl}/user/${user._id}`, {
-          withCredentials: true,
-        });
-
-        console.log("User data by ID:", resp.data);
-        // Handle the user data as needed, e.g., update state
-      } catch (error) {
-        setErrorMessages(error);
-      }
-    }
-  };
   useEffect(() => {
-    const fetchData = async () => {
-      await handleIfUserHasToken();
+    const handleIfUserHasToken = async () => {
+      let JWTinfocookie = cookie.get("JWTinfo");
+
+      if (!JWTinfocookie) return;
+
+      JWTinfocookie = JWTinfocookie.replace("j:", "");
+      const cookieValueObj = JSON.parse(JWTinfocookie);
+      setUserId(cookieValueObj.user._id);
+
+      const expirationInMs = new Date(cookieValueObj.expires) - new Date();
+
+      if (expirationInMs <= 0) return;
+
+      setHasToken(true);
+      setUser(cookieValueObj.user);
+      setMsg(`Eingeloggter User: ${cookieValueObj.email}.`);
     };
-    fetchData();
-  }, [hasToken]); // Dependency added for re-render
+
+    handleIfUserHasToken();
+  }, [setHasToken, setUser, setUserId, setMsg]);
 
   return (
     <>
@@ -182,7 +116,7 @@ function Login() {
         <form onSubmit={signUpHandler}>
           <div className="user-box">
             <input
-              required=""
+              required
               placeholder="Enter your Name"
               id="name"
               name="name"
@@ -192,7 +126,7 @@ function Login() {
           </div>
           <div className="user-box">
             <input
-              required=""
+              required
               placeholder="Enter your email"
               id="email"
               name="email"
@@ -202,7 +136,7 @@ function Login() {
           </div>
           <div className="user-box">
             <input
-              required=""
+              required
               placeholder="Enter your password"
               id="password"
               name="password"
@@ -210,6 +144,7 @@ function Login() {
             />
             <label htmlFor="password">Password</label>
           </div>
+          {passwordError && <p className="error-message" style={{color:"orange"}} >{passwordError}</p>}
           <button type="submit">
             <span></span>
             <span></span>
@@ -218,9 +153,6 @@ function Login() {
             Submit
           </button>
         </form>
-        {/* <p>
-        Now you have an account! <Link to="/">Log in!</Link>
-      </p> */}
       </div>
     </>
   );
