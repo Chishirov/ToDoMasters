@@ -1,6 +1,7 @@
 import Login from "../components/Login.jsx";
 import Logout from "../components/Logout.jsx";
 import Signup from "../components/Signup.jsx";
+import UpdatePassword from "../components/UpdatePassword.jsx";
 // import UpdatePassword from "../components/UpdatePassword";
 
 function loginPage() {
@@ -8,7 +9,7 @@ function loginPage() {
     <div className="container">
       <Signup />
       <Login />
-      {/* <UpdatePassword /> */}
+      <UpdatePassword />
       <Logout />
     </div>
   );

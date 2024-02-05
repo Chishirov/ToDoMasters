@@ -2,6 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import LoginButton from "../components/LoginButton";
 import "../styles/home.css";
+import IntroAnimation from "../components/IntroAnimation";
+import LogoutButton from "../components/LogoutButton";
 function Home() {
   const navigate = useNavigate();
   return (
@@ -16,14 +18,12 @@ function Home() {
         <LoginButton />
       </div>
 
-      <div>
-        <button
-          onClick={() => navigate("/signup")}
-          style={{ background: "initial", border: "1px solid" }}
-        >
-          Sugnup
-        </button>
+      <div className="home-box">
+        <div className="text-animation">
+          <IntroAnimation />
+        </div>
       </div>
+      <LogoutButton />
     </>
   );
 }

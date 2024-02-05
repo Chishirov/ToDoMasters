@@ -46,7 +46,7 @@ function DropDown() {
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item href="#/action-1">Update Password</Dropdown.Item>
+        <Dropdown.Item href="/update-password">Update Password</Dropdown.Item>
         <Logout />
         <Dropdown.Item href="#/action-3">Setting</Dropdown.Item>
       </Dropdown.Menu>

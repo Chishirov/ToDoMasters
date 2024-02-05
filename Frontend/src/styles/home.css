@@ -5,3 +5,21 @@
   right: 0;
   float: right;
 }
+
+.home-box {
+  width: 60%;
+  height: 800px;
+  /* padding: 600px; */
+  display: flex;
+  text-align: center;
+  justify-content: end;
+  align-content: center;
+  align-items: center;
+}
+.text-animation {
+  backdrop-filter: blur(2px);
+  padding: 50px;
+  color: rgb(246, 245, 242);
+  font-size: 30px;
+  font-weight: bold;
+}
