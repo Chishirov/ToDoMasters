@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://todomaster-d48m.onrender.com",
+    origin: "https://todomaster-frotend.onrender.com",
     credentials: true,
   })
 );
