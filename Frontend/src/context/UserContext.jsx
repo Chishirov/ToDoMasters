@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-
+import backendApiUrl from "../../config/config.js";
 const UserContext = createContext();
 const UserContextProvider = ({ children }) => {
   const [error, setError] = useState("");
@@ -10,7 +10,7 @@ const UserContextProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   console.log("user in context", user);
 
-  const backendApiUrl = "https://todo-8u90.onrender.com";
+  // const backendApiUrl = "https://todo-8u90.onrender.com";
   return (
     <UserContext.Provider
       value={{
