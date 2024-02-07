@@ -1,6 +1,6 @@
 let url;
 if (process.env.NODE_ENV === "production") {
-  url = "https://todo-8u90.onrender.com";
+  url = "https://todomaster-d48m.onrender.com";
 } else {
   url = "http://localhost:3005";
 }
