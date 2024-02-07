@@ -13,13 +13,13 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-// app.use(
-//   cors({
-//     origin: "https://todomaster.onrender.com",
-//     credentials: true,
-//   })
-// );
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://todomaster-frotend.onrender.com",
+    credentials: true,
+  })
+);
+// app.use(cors());
 app.get("/", (req, res) => {
   res.send("Backend running");
 });
