@@ -10,8 +10,7 @@ const UserContextProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   console.log("user in context", user);
 
-  const backendApiUrl =
-    "http://localhost:3005/api" || "https://todo-8u90.onrender.com";
+  const backendApiUrl = "https://todo-8u90.onrender.com";
   return (
     <UserContext.Provider
       value={{
