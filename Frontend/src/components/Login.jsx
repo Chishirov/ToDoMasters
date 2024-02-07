@@ -112,29 +112,6 @@ function Login() {
     }
   };
 
-  const handleIfUserHasToken = () => {
-    console.log("handleIfUserHasToken aufgerufen");
-
-    let JWTinfocookie = cookie.get("JWTinfo");
-
-    console.log("JWTinfo cookie", JWTinfocookie);
-    if (!JWTinfocookie) return;
-
-    JWTinfocookie = JWTinfocookie.replace("j:", "");
-    const cookieValueObj = JSON.parse(JWTinfocookie);
-    console.log("cookieValueObj", cookieValueObj);
-    setUserId(cookieValueObj.user._id);
-
-    const expirationInMs = new Date(cookieValueObj.expires) - new Date();
-    console.log("JWT läuft ab in", expirationInMs / 1000, "Sekunden");
-
-    if (expirationInMs <= 0) return;
-
-    setHasToken(true);
-    setUser(cookieValueObj.user);
-    setMsg(`Eingeloggter User: ${cookieValueObj.email}.`);
-  };
-
   const userInfoHandler = async () => {
     resetMessages();
 
@@ -166,10 +143,29 @@ function Login() {
     }
   };
   useEffect(() => {
-    const fetchData = async () => {
-      await handleIfUserHasToken();
+    const handleIfUserHasToken = () => {
+      console.log("handleIfUserHasToken aufgerufen");
+
+      let JWTinfocookie = cookie.get("JWTinfo");
+
+      console.log("JWTinfo cookie", JWTinfocookie);
+      if (!JWTinfocookie) return;
+
+      JWTinfocookie = JWTinfocookie.replace("j:", "");
+      const cookieValueObj = JSON.parse(JWTinfocookie);
+      console.log("cookieValueObj", cookieValueObj);
+      setUserId(cookieValueObj.user._id);
+
+      const expirationInMs = new Date(cookieValueObj.expires) - new Date();
+      console.log("JWT läuft ab in", expirationInMs / 1000, "Sekunden");
+
+      if (expirationInMs <= 0) return;
+
+      setHasToken(true);
+      setUser(cookieValueObj.user);
+      setMsg(`Eingeloggter User: ${cookieValueObj.email}.`);
     };
-    fetchData();
+    handleIfUserHasToken();
   }, [hasToken]); // Dependency added for re-render
 
   return (
