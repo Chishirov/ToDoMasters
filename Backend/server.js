@@ -20,9 +20,9 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  res.send("Backend running");
-});
+// app.get("/", (req, res) => {
+//   res.send("Backend running");
+// });
 // Venwendung zum Mongoose
 await connectMongoose();
 
